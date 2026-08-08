@@ -3,621 +3,1438 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jumbo KW Shift B — All-Rounder Position</title>
+<title>All-Rounder · KW Shift B · Jumbo</title>
+<meta name="description" content="Jumbo is hiring a Warehouse All-Rounder for KW Shift B. Five stations, one role, one shift that never stands still.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-    --amber: #FFC107;
-    --amber-deep: #FF9E00;
-    --ink: #14110D;
-    --ink-soft: #2A251D;
-    --cream: #FFF9EC;
-    --cream-dim: #F3E9D2;
-    --line: rgba(20,17,13,0.12);
-}
+    --void:   #07080A;
+    --deck:   #0D0F12;
+    --riser:  #14171B;
+    --glass:  rgba(255,255,255,.045);
+    --line:   rgba(255,255,255,.09);
+    --line-2: rgba(255,255,255,.16);
+    --text:   #E9EAE7;
+    --dim:    rgba(233,234,231,.56);
+    --dimmer: rgba(233,234,231,.36);
+    --lamp:   #FFE400;
+    --ember:  #FF6B1A;
 
-html { scroll-behavior: smooth; }
+    --display: 'Bricolage Grotesque', system-ui, sans-serif;
+    --body: 'IBM Plex Sans', system-ui, sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+    --pad: clamp(20px, 5vw, 80px);
+    --ease: cubic-bezier(.22,.8,.24,1);
+    --slow: cubic-bezier(.16,1,.3,1);
+}
 
 body {
-    font-family: 'Sora', sans-serif;
-    background: var(--cream);
-    color: var(--ink);
-    overflow-x: hidden;
+    font-family: var(--body);
+    background: var(--void);
+    color: var(--text);
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+html.smooth { scrollbar-gutter: stable; }
+html.smooth #sw { position: fixed; top: 0; left: 0; width: 100%; will-change: transform; }
+
+img, video { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--lamp); outline-offset: 4px; border-radius: 2px; }
+
+/* grain */
+.grain {
+    position: fixed; inset: -50%; z-index: 9000; pointer-events: none; opacity: .34;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.42'/%3E%3C/svg%3E");
+    animation: grain 6s steps(6) infinite;
+    mix-blend-mode: overlay;
+}
+@keyframes grain {
+    0%,100% { transform: translate(0,0) }
+    20% { transform: translate(-4%,3%) }
+    40% { transform: translate(3%,-4%) }
+    60% { transform: translate(-3%,-3%) }
+    80% { transform: translate(4%,2%) }
 }
 
-h1, h2, h3, .display { font-family: 'Archivo', sans-serif; }
+/* type */
+.mono { font-family: var(--mono); font-size: .7rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; }
+.h1 { font-family: var(--display); font-weight: 800; font-size: clamp(3rem, 11vw, 9.5rem); line-height: .87; letter-spacing: -.045em; }
+.h2 { font-family: var(--display); font-weight: 700; font-size: clamp(2rem, 5.2vw, 4.2rem); line-height: .98; letter-spacing: -.035em; }
+.h3 { font-family: var(--display); font-weight: 700; font-size: clamp(1.25rem, 2.1vw, 1.7rem); line-height: 1.06; letter-spacing: -.02em; }
+.body-lg { font-size: clamp(1.02rem, 1.35vw, 1.2rem); font-weight: 300; line-height: 1.66; color: var(--dim); }
+.wrap { max-width: 1280px; margin: 0 auto; }
+.sec { padding: clamp(80px, 12vw, 180px) var(--pad); position: relative; }
 
-/* ===== NAV ===== */
-nav {
-    position: fixed; top: 0; left: 0; width: 100%;
-    z-index: 1000;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 22px 48px;
-    transition: background .4s ease, padding .4s ease, box-shadow .4s ease;
-    mix-blend-mode: difference;
+/* nav */
+.nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 800;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 var(--pad); height: 68px;
+    background: rgba(7,8,10,.6); backdrop-filter: blur(14px) saturate(1.4);
+    border-bottom: 1px solid transparent; transition: border-color .5s, background .5s;
 }
-nav.scrolled {
-    background: rgba(255,249,236,0.92);
-    backdrop-filter: blur(14px);
-    padding: 16px 48px;
-    box-shadow: 0 1px 0 var(--line);
-    mix-blend-mode: normal;
-}
-nav .brand {
-    font-family: 'Archivo'; font-weight: 800; font-size: 1.05rem;
-    letter-spacing: .14em; text-transform: uppercase; color: #fff;
-}
-nav.scrolled .brand { color: var(--ink); }
-nav .nav-links { display: flex; gap: 38px; list-style: none; align-items: center; }
-nav .nav-links a {
-    text-decoration: none; color: #fff; font-size: .82rem;
-    font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
-    position: relative; transition: opacity .3s;
-}
-nav.scrolled .nav-links a { color: var(--ink); }
-nav .nav-links a:not(.nav-cta)::after {
-    content: ''; position: absolute; left: 0; bottom: -6px;
-    width: 0; height: 1.5px; background: currentColor; transition: width .35s ease;
-}
-nav .nav-links a:not(.nav-cta):hover::after { width: 100%; }
-.nav-cta {
-    border: 1.5px solid currentColor; padding: 9px 22px; border-radius: 100px;
-    transition: background .35s, color .35s !important;
-}
-nav.scrolled .nav-cta:hover { background: var(--ink); color: var(--cream) !important; }
-.nav-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; }
-.nav-toggle span { width: 26px; height: 2px; background: #fff; transition: .3s; }
-nav.scrolled .nav-toggle span { background: var(--ink); }
+.nav.lit { border-bottom-color: var(--line); background: rgba(7,8,10,.82); }
+.brand { display: flex; align-items: center; gap: 11px; font-family: var(--display); font-weight: 700; font-size: .96rem; letter-spacing: -.01em; }
+.pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--lamp); box-shadow: 0 0 0 0 rgba(255,228,0,.55); animation: pulse 2.6s infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255,228,0,.5) } 70% { box-shadow: 0 0 0 11px rgba(255,228,0,0) } 100% { box-shadow: 0 0 0 0 rgba(255,228,0,0) } }
+.brand .div { color: var(--dimmer); }
 
-/* ===== HERO ===== */
-.hero {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-    height: 100svh; z-index: 100; overflow: hidden; background: var(--ink);
-    will-change: opacity, transform;
+.menu { display: flex; align-items: center; gap: 30px; list-style: none; }
+.menu a { font-family: var(--mono); font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); transition: color .3s; }
+.menu a:hover { color: var(--text); }
+.menu .apply-link {
+    color: var(--void); background: var(--lamp); padding: 10px 18px; border-radius: 100px;
+    font-weight: 500; transition: transform .35s var(--ease), box-shadow .35s var(--ease);
 }
-.hero video {
-    position: absolute; top: 50%; left: 50%;
-    min-width: 100%; min-height: 100%; width: auto; height: auto;
-    transform: translate(-50%, -50%); object-fit: cover; z-index: 1;
-}
-.hero-overlay {
-    position: absolute; inset: 0; z-index: 2;
-    background:
-        linear-gradient(180deg, rgba(20,17,13,.55) 0%, rgba(20,17,13,.15) 35%, rgba(20,17,13,.35) 70%, rgba(20,17,13,.8) 100%);
-}
-.hero-grain { position: absolute; inset: 0; z-index: 3; opacity: .07; pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-.hero-content {
-    position: absolute; z-index: 4; left: 0; bottom: 0;
-    padding: 0 48px 9vh; width: 100%;
-}
-.hero-eyebrow {
-    display: inline-flex; align-items: center; gap: 12px;
-    color: var(--amber); font-size: .8rem; font-weight: 600;
-    letter-spacing: .26em; text-transform: uppercase; margin-bottom: 26px;
-    opacity: 0; animation: riseIn .9s .3s forwards;
-}
-.hero-eyebrow .pulse {
-    width: 9px; height: 9px; border-radius: 50%; background: var(--amber);
-    box-shadow: 0 0 0 0 rgba(255,193,7,.7); animation: pulse 2s infinite;
-}
-@keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(255,193,7,.6); }
-    70% { box-shadow: 0 0 0 14px rgba(255,193,7,0); }
-    100% { box-shadow: 0 0 0 0 rgba(255,193,7,0); }
-}
-.hero h1 {
-    color: var(--cream); font-weight: 800; line-height: 0.98;
-    font-size: clamp(2.4rem, 6.4vw, 6rem); letter-spacing: -0.02em;
-    max-width: 16ch;
-}
-.hero h1 .line { display: block; overflow: hidden; }
-.hero h1 .line span { display: block; transform: translateY(110%); animation: lineUp 1s forwards; }
-.hero h1 .line:nth-child(1) span { animation-delay: .45s; }
-.hero h1 .line:nth-child(2) span { animation-delay: .6s; }
-.hero h1 .line:nth-child(3) span { animation-delay: .75s; }
-.hero h1 em { font-style: normal; color: var(--amber); }
-.hero-sub {
-    margin-top: 28px; color: rgba(255,249,236,.82); font-size: clamp(1rem,1.4vw,1.2rem);
-    max-width: 46ch; font-weight: 300; line-height: 1.6;
-    opacity: 0; animation: riseIn 1s 1s forwards;
-}
-@keyframes lineUp { to { transform: translateY(0); } }
-@keyframes riseIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.menu .apply-link:hover { color: var(--void); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,228,0,.25); }
 
-.scroll-cue {
-    position: absolute; z-index: 4; bottom: 9vh; right: 48px;
-    display: flex; flex-direction: column; align-items: center; gap: 14px;
-    color: rgba(255,249,236,.7); opacity: 0; animation: riseIn 1s 1.4s forwards;
+.burger { display: none; width: 40px; height: 40px; background: none; border: 0; cursor: pointer; position: relative; }
+.burger i { position: absolute; left: 10px; width: 20px; height: 1.5px; background: var(--text); transition: transform .4s var(--ease), opacity .3s; }
+.burger i:nth-child(1) { top: 17px } .burger i:nth-child(2) { top: 23px }
+.burger.on i:nth-child(1) { transform: translateY(3px) rotate(45deg) }
+.burger.on i:nth-child(2) { transform: translateY(-3px) rotate(-45deg) }
+
+/* hero */
+.hero { min-height: 100svh; padding: 148px var(--pad) 0; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
+.aurora { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.aurora i {
+    position: absolute; border-radius: 50%; filter: blur(90px); opacity: .5;
+    animation: float 22s ease-in-out infinite;
 }
-.scroll-cue .txt { writing-mode: vertical-rl; font-size: .72rem; letter-spacing: .24em; text-transform: uppercase; }
-.scroll-cue .track { width: 1.5px; height: 60px; background: rgba(255,249,236,.25); position: relative; overflow: hidden; }
-.scroll-cue .track::after { content:''; position:absolute; top:-50%; left:0; width:100%; height:50%; background: var(--amber); animation: trackDrop 1.8s infinite; }
-@keyframes trackDrop { 0% { top:-50%; } 100% { top:100%; } }
+.aurora i:nth-child(1) { width: 46vw; height: 46vw; top: -14%; right: -6%; background: radial-gradient(circle, rgba(255,228,0,.20), transparent 68%); }
+.aurora i:nth-child(2) { width: 38vw; height: 38vw; bottom: -18%; left: -10%; background: radial-gradient(circle, rgba(255,107,26,.15), transparent 68%); animation-delay: -8s; }
+@keyframes float { 0%,100% { transform: translate(0,0) scale(1) } 50% { transform: translate(3%,4%) scale(1.09) } }
 
-/* ===== SPACER ===== */
-.hero-spacer { height: 100vh; height: 100svh; background: var(--ink); position: relative; z-index: 50; }
-
-/* ===== CONTENT ===== */
-.content { position: relative; z-index: 200; background: var(--cream); }
-section { padding: 130px 48px; position: relative; }
-.container { max-width: 1180px; margin: 0 auto; }
-
-.tag {
-    display: inline-flex; align-items: center; gap: 10px; font-size: .76rem;
-    font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
-    color: var(--amber-deep); margin-bottom: 26px;
+.lamp {
+    position: absolute; width: 640px; height: 640px; left: 0; top: 0; margin: -320px 0 0 -320px;
+    border-radius: 50%; pointer-events: none; opacity: 0; z-index: 1;
+    background: radial-gradient(circle, rgba(255,228,0,.13) 0%, rgba(255,228,0,.05) 34%, transparent 68%);
+    transition: opacity .7s var(--ease); will-change: transform;
 }
-.tag::before { content: ''; width: 32px; height: 1.5px; background: var(--amber-deep); }
+.hero:hover .lamp { opacity: 1; }
 
-.h-section { font-size: clamp(2rem, 4.6vw, 3.6rem); font-weight: 800; line-height: 1.02; letter-spacing: -0.02em; max-width: 18ch; }
+.hero-inner { position: relative; z-index: 3; width: 100%; }
+.hero-tag { display: inline-flex; align-items: center; gap: 12px; border: 1px solid var(--line-2); border-radius: 100px; padding: 9px 18px; color: var(--dim); margin-bottom: clamp(26px, 4vw, 42px); }
+.hero-tag .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--lamp); }
 
-/* INTRO */
-.intro { background: var(--cream); }
-.intro-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; }
-.intro-lead { font-size: clamp(1.3rem,2vw,1.7rem); font-weight: 300; line-height: 1.5; color: var(--ink); }
-.intro-lead strong { font-weight: 600; color: var(--amber-deep); }
-.intro-card {
-    background: var(--ink); color: var(--cream); padding: 50px;
-    border-radius: 24px; position: relative; overflow: hidden;
-}
-.intro-card::before {
-    content: ''; position: absolute; top: -40%; right: -20%;
-    width: 320px; height: 320px; border-radius: 50%;
-    background: radial-gradient(circle, var(--amber) 0%, transparent 70%); opacity: .25;
-}
-.intro-card h3 { font-size: 1.5rem; margin-bottom: 18px; position: relative; }
-.intro-card p { color: rgba(255,249,236,.78); font-weight: 300; line-height: 1.7; position: relative; }
-.intro-card .quote-mark { font-family: 'Archivo'; font-size: 5rem; line-height: 0; color: var(--amber); position: relative; top: 30px; }
+.h1 .l { display: block; }
+.h1 .w { display: inline-block; }
+.h1 .w > b { display: inline-block; font-weight: inherit; transform: translateY(.42em); opacity: 0; filter: blur(14px); transition: transform 1.15s var(--slow), opacity 1.15s var(--slow), filter 1.15s var(--slow); }
+.h1.lit .w > b { transform: none; opacity: 1; filter: blur(0); }
+.h1 .glow { color: var(--lamp); text-shadow: 0 0 60px rgba(255,228,0,.35); }
+.h1 .out { color: transparent; -webkit-text-stroke: 1.2px rgba(233,234,231,.5); }
 
-/* ROLES */
-.roles { background: var(--ink); color: var(--cream); }
-.roles .h-section { color: var(--cream); }
-.roles .tag { color: var(--amber); }
-.roles .tag::before { background: var(--amber); }
-.roles-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; margin-bottom: 70px; flex-wrap: wrap; }
-.roles-head p { max-width: 38ch; color: rgba(255,249,236,.7); font-weight: 300; line-height: 1.6; }
-.roles-list { display: grid; gap: 0; }
-.role-row {
-    display: grid; grid-template-columns: 80px 1fr 2fr; gap: 40px; align-items: center;
-    padding: 38px 0; border-top: 1px solid rgba(255,249,236,.14);
-    cursor: default; transition: padding .4s ease;
-}
-.role-row:last-child { border-bottom: 1px solid rgba(255,249,236,.14); }
-.role-row:hover { padding-left: 24px; }
-.role-row:hover .role-num { color: var(--amber); }
-.role-row:hover .role-name { color: var(--amber); }
-.role-num { font-family: 'Archivo'; font-weight: 700; font-size: 1.1rem; color: rgba(255,249,236,.4); transition: color .35s; }
-.role-name { font-family: 'Archivo'; font-weight: 700; font-size: clamp(1.4rem,2.4vw,2.2rem); letter-spacing: -0.01em; transition: color .35s, transform .35s; }
-.role-desc { color: rgba(255,249,236,.7); font-weight: 300; line-height: 1.65; font-size: 1.02rem; }
+.hero-foot { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 32px; margin-top: clamp(34px, 5vw, 56px); }
+.hero-foot p { max-width: 40ch; }
+.facts { display: flex; gap: 40px; }
+.facts dt { font-family: var(--mono); font-size: .64rem; letter-spacing: .16em; text-transform: uppercase; color: var(--dimmer); }
+.facts dd { font-family: var(--display); font-weight: 700; font-size: 1.1rem; margin-top: 7px; }
 
-/* TEAM */
-.team { background: var(--amber); color: var(--ink); overflow: hidden; }
-.team .h-section { color: var(--ink); }
-.team .tag { color: var(--ink-soft); }
-.team .tag::before { background: var(--ink-soft); }
-.team-intro { max-width: 44ch; font-size: 1.15rem; font-weight: 300; line-height: 1.6; margin-bottom: 70px; color: var(--ink-soft); }
-.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
-.leader {
-    background: var(--cream); border-radius: 22px; padding: 56px 40px;
-    position: relative; overflow: hidden; transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s;
-}
-.leader::before {
-    content: ''; position: absolute; top: 36px; left: 40px;
-    width: 14px; height: 14px; border-radius: 50%; background: var(--amber);
-    transition: transform .4s, background .4s;
-}
-.leader:hover { transform: translateY(-12px); box-shadow: 0 30px 60px rgba(20,17,13,.22); }
-.leader:hover::before { transform: scale(1.4); background: var(--amber-deep); }
-.leader h3 { font-size: 2.1rem; font-weight: 800; margin-bottom: 10px; margin-top: 40px; letter-spacing: -0.01em; }
-.leader .role-label { font-size: .8rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--amber-deep); }
-.leader .bar { width: 40px; height: 4px; background: var(--ink); margin-top: 22px; transition: width .4s; }
-.leader:hover .bar { width: 80px; }
+.scroll-hint { position: relative; z-index: 3; margin-top: clamp(40px, 6vw, 70px); display: flex; align-items: center; gap: 14px; color: var(--dimmer); }
+.scroll-hint .bar { width: 46px; height: 1px; background: var(--line-2); position: relative; overflow: hidden; }
+.scroll-hint .bar::after { content: ''; position: absolute; inset: 0; background: var(--lamp); transform: translateX(-100%); animation: sweep 2.4s var(--ease) infinite; }
+@keyframes sweep { 0% { transform: translateX(-100%) } 60%,100% { transform: translateX(100%) } }
 
-/* APPLY */
-.apply { background: var(--ink); color: var(--cream); text-align: center; position: relative; overflow: hidden; }
-.apply::before {
-    content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-    width: 130%; height: 130%;
-    background: radial-gradient(circle, rgba(255,193,7,.16) 0%, transparent 55%);
+/* video reveal */
+.reel { padding: 0 var(--pad) clamp(60px,8vw,110px); }
+.frame {
+    position: relative; overflow: hidden; border-radius: 20px; border: 1px solid var(--line);
+    transform: scale(.88); will-change: transform, border-radius; background: #000;
+    box-shadow: 0 40px 120px rgba(0,0,0,.7);
 }
-.apply-inner { position: relative; z-index: 2; max-width: 760px; margin: 0 auto; }
-.apply .tag { color: var(--amber); justify-content: center; }
-.apply .tag::before { background: var(--amber); }
-.apply h2 { font-size: clamp(2.2rem,5.4vw,4.4rem); font-weight: 800; line-height: 1; letter-spacing: -0.02em; margin-bottom: 30px; }
-.apply h2 em { font-style: normal; color: var(--amber); }
-.apply-lead { font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: rgba(255,249,236,.82); margin-bottom: 50px; }
-
-.cv-panel {
-    background: rgba(255,249,236,.05); border: 1px solid rgba(255,249,236,.16);
-    border-radius: 24px; padding: 48px; backdrop-filter: blur(6px);
-    text-align: left; margin-bottom: 48px;
+.frame video { width: 100%; height: auto; }
+.frame::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(7,8,10,.72), transparent 46%); pointer-events: none; }
+.reel-bar { position: absolute; z-index: 2; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: clamp(16px,2.4vw,28px); }
+.reel-bar .mono { color: var(--dim); }
+.audio {
+    display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--line-2);
+    background: rgba(7,8,10,.5); backdrop-filter: blur(10px); color: var(--text);
+    border-radius: 100px; padding: 10px 16px; cursor: pointer;
+    font-family: var(--mono); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase;
+    transition: background .3s, border-color .3s;
 }
-.cv-panel h3 { font-size: 1.05rem; letter-spacing: .12em; text-transform: uppercase; color: var(--amber); margin-bottom: 28px; font-weight: 700; }
-.cv-items { display: grid; gap: 20px; }
-.cv-item { display: flex; gap: 18px; align-items: flex-start; }
-.cv-item .mark {
-    flex-shrink: 0; width: 26px; height: 26px; border: 1.5px solid var(--amber);
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    color: var(--amber); font-size: .8rem; margin-top: 2px;
+.audio:hover { background: rgba(255,255,255,.09); border-color: var(--line-2); }
+.audio .eq { display: flex; align-items: flex-end; gap: 2px; height: 11px; }
+.audio .eq i { width: 2px; height: 4px; background: var(--lamp); }
+.audio.live .eq i { animation: eq .9s ease-in-out infinite; }
+.audio.live .eq i:nth-child(2) { animation-delay: .15s } .audio.live .eq i:nth-child(3) { animation-delay: .3s }
+@keyframes eq { 0%,100% { height: 3px } 50% { height: 11px } }
+
+/* marquee */
+.strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 22px 0; overflow: hidden; white-space: nowrap; }
+.strip-track { display: inline-flex; align-items: center; gap: 34px; padding-right: 34px; will-change: transform; }
+.strip-track span { font-family: var(--display); font-weight: 500; font-size: clamp(1.05rem,1.9vw,1.5rem); letter-spacing: -.02em; color: var(--dimmer); }
+.strip-track em { color: var(--lamp); font-style: normal; }
+
+/* reveal */
+.rv { opacity: 0; transform: translateY(34px); transition: opacity 1s var(--slow), transform 1s var(--slow); }
+.rv.lit { opacity: 1; transform: none; }
+.dl1 { transition-delay: .1s } .dl2 { transition-delay: .2s } .dl3 { transition-delay: .3s }
+
+.words .w > b { display: inline-block; font-weight: inherit; transform: translateY(.5em); opacity: 0; transition: transform .9s var(--slow), opacity .9s var(--slow); }
+.words.lit .w > b { transform: none; opacity: 1; }
+
+/* role */
+.role-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(36px,6vw,110px); align-items: start; }
+.eyebrow { color: var(--ember); display: block; margin-bottom: 20px; }
+.role-copy p { font-weight: 300; line-height: 1.7; color: var(--dim); font-size: 1.06rem; }
+.role-copy p + p { margin-top: 24px; }
+.quote {
+    font-family: var(--display); font-weight: 700; font-size: clamp(1.5rem,2.9vw,2.3rem);
+    line-height: 1.1; letter-spacing: -.03em; color: var(--text);
+    margin: 38px 0; padding: 30px 0 0; border-top: 1px solid var(--line);
 }
-.cv-item .mark::after { content: ''; width: 7px; height: 7px; background: var(--amber); border-radius: 50%; }
-.cv-item p { color: rgba(255,249,236,.85); font-weight: 300; line-height: 1.55; }
-.cv-item p strong { font-weight: 600; color: var(--cream); }
+.quote em { font-style: normal; color: var(--lamp); }
 
-.email-line {
-    display: flex; align-items: center; justify-content: center; gap: 14px;
-    font-size: 1.05rem; color: rgba(255,249,236,.7); margin-bottom: 40px; flex-wrap: wrap;
+/* glass cards */
+.cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: clamp(44px,6vw,72px); }
+.card {
+    position: relative; overflow: hidden; border-radius: 18px; padding: 34px 30px 32px;
+    background: var(--glass); border: 1px solid var(--line);
+    transition: transform .6s var(--slow), border-color .6s, background .6s;
+    will-change: transform;
 }
-.email-line .addr { font-weight: 600; color: var(--amber); letter-spacing: .02em; }
-
-.btn-apply {
-    display: inline-flex; align-items: center; gap: 16px;
-    background: var(--amber); color: var(--ink); border: none; cursor: pointer;
-    font-family: 'Archivo'; font-weight: 700; font-size: 1.05rem; letter-spacing: .02em;
-    padding: 22px 46px; border-radius: 100px; position: relative; overflow: hidden;
-    transition: transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s;
+.card:nth-child(4) { grid-column: span 2; }
+.card::before {
+    content: ''; position: absolute; inset: 0; opacity: 0; transition: opacity .5s;
+    background: radial-gradient(420px circle at var(--mx,50%) var(--my,50%), rgba(255,228,0,.11), transparent 62%);
+    pointer-events: none;
 }
-.btn-apply span { position: relative; z-index: 2; transition: color .4s; }
-.btn-apply .arrow { position: relative; z-index: 2; transition: transform .4s; }
-.btn-apply::before {
-    content: ''; position: absolute; inset: 0; background: var(--cream);
-    transform: translateX(-101%); transition: transform .45s cubic-bezier(.2,.8,.2,1);
+.card:hover { border-color: var(--line-2); background: rgba(255,255,255,.065); transform: translateY(-5px); }
+.card:hover::before { opacity: 1; }
+.card .tag { font-family: var(--mono); font-size: .64rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ember); }
+.card h3 { margin: 16px 0 13px; }
+.card p { font-weight: 300; line-height: 1.62; color: var(--dim); font-size: .97rem; }
+
+/* counters */
+.counts { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: clamp(40px,5vw,64px) 0; }
+.count { text-align: center; }
+.count .n { font-family: var(--display); font-weight: 800; font-size: clamp(2.6rem,6vw,5rem); line-height: 1; letter-spacing: -.05em; color: var(--lamp); }
+.count .t { font-family: var(--mono); font-size: .64rem; letter-spacing: .16em; text-transform: uppercase; color: var(--dimmer); margin-top: 12px; }
+
+/* stations */
+.board { margin-top: clamp(44px,6vw,72px); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; background: var(--deck); }
+.rail { display: flex; position: relative; border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
+.rail::-webkit-scrollbar { display: none; }
+.rail .ink { position: absolute; bottom: 0; height: 2px; background: var(--lamp); transition: transform .55s var(--slow), width .55s var(--slow); box-shadow: 0 0 18px rgba(255,228,0,.6); }
+.stn {
+    flex: 1 0 auto; min-width: 150px; background: none; border: 0; cursor: pointer;
+    padding: 22px 24px; text-align: left; color: var(--dimmer); font: inherit;
+    transition: color .35s, background .35s;
 }
-.btn-apply:hover { transform: translateY(-4px); box-shadow: 0 20px 45px rgba(255,193,7,.35); }
-.btn-apply:hover::before { transform: translateX(0); }
-.btn-apply:hover .arrow { transform: translateX(6px); }
+.stn:hover { color: var(--dim); background: rgba(255,255,255,.03); }
+.stn[aria-selected="true"] { color: var(--text); }
+.stn .k { font-family: var(--mono); font-size: .62rem; letter-spacing: .16em; display: block; margin-bottom: 9px; opacity: .65; }
+.stn .v { font-family: var(--display); font-weight: 700; font-size: 1.02rem; letter-spacing: -.015em; }
 
-/* FOOTER */
-footer { background: var(--ink); color: rgba(255,249,236,.45); padding: 50px 48px; border-top: 1px solid rgba(255,249,236,.1); }
-.footer-row { max-width: 1180px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
-.footer-row .fbrand { font-family: 'Archivo'; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--cream); font-size: .9rem; }
-.footer-row a { color: var(--amber); text-decoration: none; }
+.pane { display: none; padding: clamp(30px,4.5vw,60px); }
+.pane.on { display: grid; grid-template-columns: 1.2fr .8fr; gap: clamp(28px,4vw,56px); }
+.pane.on > * { animation: paneIn .7s var(--slow) backwards; }
+.pane.on > *:nth-child(2) { animation-delay: .1s }
+@keyframes paneIn { from { opacity: 0; transform: translateY(20px) } to { opacity: 1; transform: none } }
+.pane h3 { font-family: var(--display); font-weight: 800; font-size: clamp(1.9rem,4vw,3.2rem); line-height: .98; letter-spacing: -.04em; }
+.pane h3 span { color: var(--lamp); }
+.pane .d { margin-top: 22px; font-weight: 300; line-height: 1.72; color: var(--dim); font-size: 1.04rem; max-width: 48ch; }
+.kit { display: flex; flex-direction: column; gap: 1px; background: var(--line); border-radius: 12px; overflow: hidden; align-self: start; }
+.kit div { background: var(--deck); padding: 15px 18px; font-family: var(--mono); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
 
-/* REVEAL ANIMATION */
-.reveal { opacity: 0; transform: translateY(40px); transition: opacity .9s cubic-bezier(.2,.8,.2,1), transform .9s cubic-bezier(.2,.8,.2,1); }
-.reveal.in { opacity: 1; transform: translateY(0); }
-.reveal-d1 { transition-delay: .1s; } .reveal-d2 { transition-delay: .2s; } .reveal-d3 { transition-delay: .3s; }
-
-/* MODAL */
-.modal { display: none; position: fixed; inset: 0; z-index: 3000; background: rgba(20,17,13,.6); backdrop-filter: blur(8px); overflow-y: auto; }
-.modal.open { display: block; animation: fadeIn .3s; }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-.modal-box {
-    background: var(--cream); max-width: 560px; margin: 6vh auto; border-radius: 26px;
-    padding: 50px; position: relative; animation: popIn .45s cubic-bezier(.2,.8,.2,1);
+/* leaders */
+.crew { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: clamp(44px,6vw,72px); }
+.person {
+    position: relative; overflow: hidden; border-radius: 18px; padding: 38px 32px;
+    background: var(--glass); border: 1px solid var(--line);
+    transition: transform .6s var(--slow), border-color .5s, background .5s;
+    will-change: transform;
 }
-@keyframes popIn { from { opacity: 0; transform: translateY(30px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
-.modal-box .close { position: absolute; top: 26px; right: 28px; background: none; border: none; font-size: 1.6rem; cursor: pointer; color: var(--ink); line-height: 1; transition: transform .3s; }
-.modal-box .close:hover { transform: rotate(90deg); }
-.modal-box .tag { color: var(--amber-deep); }
-.modal-box .tag::before { background: var(--amber-deep); }
-.modal-box h2 { font-size: 1.9rem; font-weight: 800; margin-bottom: 12px; }
-.modal-box .m-sub { color: var(--ink-soft); font-weight: 300; line-height: 1.6; margin-bottom: 30px; }
-.field { margin-bottom: 20px; }
-.field label { display: block; font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 9px; color: var(--ink-soft); }
-.field input, .field textarea {
-    width: 100%; padding: 14px 16px; border: 1.5px solid var(--line); border-radius: 12px;
-    font-family: 'Sora'; font-size: .98rem; background: #fff; color: var(--ink); transition: border-color .3s, box-shadow .3s;
+.person::before {
+    content: ''; position: absolute; inset: 0; opacity: 0; transition: opacity .5s; pointer-events: none;
+    background: radial-gradient(320px circle at var(--mx,50%) var(--my,50%), rgba(255,107,26,.14), transparent 62%);
 }
-.field textarea { resize: vertical; min-height: 110px; }
-.field input:focus, .field textarea:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 0 4px rgba(255,193,7,.18); }
-.m-note { font-size: .85rem; color: var(--ink-soft); background: var(--cream-dim); padding: 14px 16px; border-radius: 12px; margin-bottom: 24px; line-height: 1.5; }
-.m-actions { display: flex; gap: 14px; }
-.m-actions button { flex: 1; padding: 15px; border-radius: 12px; font-family: 'Archivo'; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; transition: transform .3s, box-shadow .3s, background .3s; }
-.btn-ghost { background: transparent; border: 1.5px solid var(--ink) !important; color: var(--ink); }
-.btn-ghost:hover { background: var(--ink); color: var(--cream); }
-.btn-send { background: var(--amber); color: var(--ink); }
-.btn-send:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(255,193,7,.4); }
+.person:hover { border-color: var(--line-2); background: rgba(255,255,255,.065); }
+.person:hover::before { opacity: 1; }
+.person .r { font-family: var(--mono); font-size: .64rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ember); }
+.person h3 { font-family: var(--display); font-weight: 800; font-size: clamp(1.7rem,3vw,2.3rem); letter-spacing: -.035em; margin: 14px 0 8px; }
+.person .s { color: var(--dimmer); font-size: .9rem; font-weight: 300; }
 
-/* MOBILE */
-@media (max-width: 860px) {
-    nav { padding: 18px 24px; }
-    nav.scrolled { padding: 14px 24px; }
-    .nav-links { position: fixed; top: 0; right: 0; height: 100vh; width: 75%; max-width: 320px;
-        background: var(--ink); flex-direction: column !important; justify-content: center; gap: 30px !important;
-        transform: translateX(100%); transition: transform .5s cubic-bezier(.2,.8,.2,1); padding: 40px; }
-    .nav-links.open { transform: translateX(0); }
-    .nav-links a { color: var(--cream) !important; font-size: 1.1rem !important; }
-    .nav-toggle { display: flex; z-index: 1100; }
-    .nav-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: #fff; }
-    .nav-toggle.active span:nth-child(2) { opacity: 0; }
-    .nav-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: #fff; }
+/* apply */
+.apply { position: relative; overflow: hidden; padding: clamp(80px,12vw,170px) var(--pad); }
+.apply::before { content: ''; position: absolute; inset: 0; background: radial-gradient(70% 100% at 50% 100%, rgba(255,228,0,.10), transparent 70%); pointer-events: none; }
+.apply-in { position: relative; display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(36px,6vw,90px); align-items: start; }
+.apply h2 { font-family: var(--display); font-weight: 800; font-size: clamp(2.4rem,6.4vw,5.4rem); line-height: .92; letter-spacing: -.045em; }
+.apply h2 em { font-style: normal; color: var(--lamp); }
+.need { border-top: 1px solid var(--line); }
+.need > div { display: flex; gap: 18px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+.need .i { font-family: var(--mono); font-size: .64rem; color: var(--lamp); letter-spacing: .16em; padding-top: 4px; }
+.need p { font-weight: 300; line-height: 1.6; color: var(--dim); font-size: .98rem; }
+.need strong { color: var(--text); font-weight: 500; }
 
-    /* HERO becomes normal-flow on phone: full uncropped video, then text below */
-    nav { mix-blend-mode: normal; background: rgba(20,17,13,0.92); backdrop-filter: blur(14px); }
-    nav .brand { color: var(--cream); }
-    nav.scrolled { background: rgba(255,249,236,0.95); }
-    nav.scrolled .brand { color: var(--ink); }
-    .hero {
-        position: relative; height: auto; min-height: 0;
-        opacity: 1 !important; transform: none !important;
-        background: var(--ink); pointer-events: auto !important;
-        padding-top: 76px;
+.big-btn {
+    margin-top: 38px; display: inline-flex; align-items: center; gap: 20px;
+    background: var(--lamp); color: var(--void); border: 0; cursor: pointer; border-radius: 100px;
+    font-family: var(--display); font-weight: 700; font-size: 1.05rem; letter-spacing: -.015em;
+    padding: 22px 34px; will-change: transform;
+    transition: transform .4s var(--ease), box-shadow .4s var(--ease);
+}
+.big-btn:hover { box-shadow: 0 16px 50px rgba(255,228,0,.3); }
+.big-btn .a { transition: transform .4s var(--ease); }
+.big-btn:hover .a { transform: translateX(6px); }
+
+/* footer */
+.foot { padding: 60px var(--pad) 44px; border-top: 1px solid var(--line); }
+.foot-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px; align-items: center; }
+.foot-top .b { font-family: var(--display); font-weight: 700; }
+.foot a { color: var(--lamp); }
+.foot .fine { margin-top: 34px; padding-top: 24px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: .64rem; letter-spacing: .12em; text-transform: uppercase; color: var(--dimmer); }
+
+/* modal */
+.veil { position: fixed; inset: 0; z-index: 9500; display: none; background: rgba(4,5,6,.8); backdrop-filter: blur(10px); overflow-y: auto; padding: 4vh 16px; }
+.veil.open { display: block; }
+.sheet {
+    max-width: 620px; margin: 0 auto; background: var(--deck); border: 1px solid var(--line-2);
+    border-radius: 22px; overflow: hidden; animation: sheetIn .55s var(--slow);
+}
+@keyframes sheetIn { from { opacity: 0; transform: translateY(26px) scale(.98) } to { opacity: 1; transform: none } }
+.sheet-top { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; border-bottom: 1px solid var(--line); }
+.sheet-top .mono { color: var(--dimmer); }
+.shut { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); background: none; color: var(--text); cursor: pointer; font-size: 1.1rem; line-height: 1; transition: background .3s, transform .4s var(--ease); }
+.shut:hover { background: rgba(255,255,255,.08); transform: rotate(90deg); }
+.sheet-in { padding: clamp(26px,4vw,40px); }
+.sheet-in h2 { font-family: var(--display); font-weight: 800; font-size: 1.65rem; letter-spacing: -.03em; }
+.sheet-in .say { margin: 12px 0 26px; font-weight: 300; line-height: 1.62; color: var(--dim); font-size: .95rem; }
+
+.step { display: none } .step.on { display: block; animation: paneIn .5s var(--slow) }
+.f { margin-bottom: 16px; }
+.f label { display: block; font-family: var(--mono); font-size: .64rem; letter-spacing: .14em; text-transform: uppercase; color: var(--dimmer); margin-bottom: 9px; }
+.f input, .f textarea {
+    width: 100%; padding: 14px 16px; border-radius: 11px; background: rgba(255,255,255,.04);
+    border: 1px solid var(--line); color: var(--text); font-family: var(--body); font-size: .96rem;
+    transition: border-color .3s, background .3s;
+}
+.f textarea { resize: vertical; min-height: 100px; }
+.f input::placeholder, .f textarea::placeholder { color: rgba(233,234,231,.28); }
+.f input:focus, .f textarea:focus { outline: none; border-color: var(--lamp); background: rgba(255,255,255,.06); }
+.f input:-webkit-autofill,
+.f input:-webkit-autofill:hover,
+.f input:-webkit-autofill:focus,
+.f input:-webkit-autofill:active {
+    -webkit-text-fill-color: var(--text);
+    -webkit-box-shadow: 0 0 0 100px #171A1E inset;
+    caret-color: var(--text);
+    border-radius: 11px;
+    transition: background-color 99999s ease-out;
+}
+.hp { position: absolute; left: -9999px; opacity: 0; height: 0; }
+
+.warn { border: 1px solid rgba(255,107,26,.4); background: rgba(255,107,26,.09); border-radius: 11px; padding: 14px 16px; font-size: .89rem; line-height: 1.55; color: #FFC79E; margin-bottom: 18px; }
+.warn b { display: block; color: var(--ember); margin-bottom: 3px; }
+.warn button { background: none; border: 0; padding: 0; font: inherit; color: var(--lamp); text-decoration: underline; cursor: pointer; }
+
+.row { display: flex; gap: 12px; margin-top: 24px; }
+.row button { flex: 1; padding: 16px; border-radius: 100px; font-family: var(--display); font-weight: 700; font-size: .95rem; cursor: pointer; transition: transform .35s var(--ease), background .3s, box-shadow .35s; }
+.b-ghost { background: none; border: 1px solid var(--line-2); color: var(--text); }
+.b-ghost:hover { background: rgba(255,255,255,.06); }
+.b-solid { background: var(--lamp); border: 0; color: var(--void); }
+.b-solid:hover { box-shadow: 0 12px 32px rgba(255,228,0,.26); }
+.b-solid:disabled { opacity: .5; cursor: default; box-shadow: none; }
+
+.loading { text-align: center; padding: 46px 0; }
+.ring { width: 40px; height: 40px; border: 2px solid var(--line); border-top-color: var(--lamp); border-radius: 50%; margin: 0 auto 22px; animation: spin .9s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg) } }
+.done { width: 50px; height: 50px; border-radius: 50%; background: var(--lamp); color: var(--void); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 22px; }
+.ref { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; border: 1px solid var(--line); border-radius: 13px; padding: 18px 20px; margin: 22px 0; background: rgba(255,255,255,.03); }
+.ref .mono { color: var(--dimmer); }
+.ref b { font-family: var(--display); font-weight: 800; font-size: 1.35rem; letter-spacing: .04em; color: var(--lamp); }
+
+/* provider picker */
+.pick { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; margin: 22px 0 6px; }
+.prov {
+    display: flex; align-items: center; gap: 13px; padding: 16px; border-radius: 13px; cursor: pointer;
+    background: rgba(255,255,255,.035); border: 1px solid var(--line); color: var(--text);
+    font-family: var(--body); font-size: .95rem; text-align: left;
+    transition: border-color .3s, background .3s, transform .35s var(--ease);
+}
+.prov:hover { border-color: var(--lamp); background: rgba(255,228,0,.07); transform: translateY(-2px); }
+.prov svg { width: 22px; height: 22px; flex-shrink: 0; }
+.prov small { display: block; color: var(--dimmer); font-size: .72rem; margin-top: 2px; }
+.copy-row { margin-top: 10px; }
+.copy-row button { width: 100%; padding: 15px; border-radius: 13px; background: none; border: 1px dashed var(--line-2); color: var(--dim); font-family: var(--mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; cursor: pointer; transition: color .3s, border-color .3s; }
+.copy-row button:hover { color: var(--text); border-color: var(--lamp); }
+
+/* giant drifting background words */
+.sec > .wrap, .apply-in, .hero-inner { position: relative; z-index: 2; }
+.ghost {
+    position: absolute; left: 0; top: 50%; white-space: nowrap; pointer-events: none; z-index: 0;
+    font-family: var(--display); font-weight: 800; font-size: clamp(5rem, 17vw, 16rem);
+    line-height: 1; letter-spacing: -.05em; color: transparent;
+    -webkit-text-stroke: 1px rgba(233,234,231,.055);
+    will-change: transform;
+}
+.ghost.warm { -webkit-text-stroke-color: rgba(255,228,0,.075); }
+
+/* side progress rail */
+.railnav { position: fixed; right: 26px; top: 50%; transform: translateY(-50%); z-index: 700; display: flex; flex-direction: column; gap: 18px; align-items: flex-end; }
+.railnav a { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: .58rem; letter-spacing: .18em; text-transform: uppercase; color: var(--dimmer); }
+.railnav a span { opacity: 0; transform: translateX(8px); transition: opacity .45s var(--ease), transform .45s var(--ease); }
+.railnav a i { display: block; width: 20px; height: 2px; background: var(--line-2); transition: width .5s var(--slow), background .5s, box-shadow .5s; }
+.railnav a:hover span, .railnav a.on span { opacity: 1; transform: none; }
+.railnav a.on i { width: 42px; background: var(--lamp); box-shadow: 0 0 16px rgba(255,228,0,.6); }
+.railnav a:hover i { width: 34px; }
+
+/* cursor ring */
+.cursorring {
+    position: fixed; left: 0; top: 0; width: 32px; height: 32px; margin: -16px 0 0 -16px;
+    border: 1px solid rgba(255,228,0,.5); border-radius: 50%; pointer-events: none; z-index: 9200;
+    opacity: 0; will-change: transform;
+    transition: opacity .4s, width .35s var(--ease), height .35s var(--ease), margin .35s var(--ease), background .35s, border-color .35s;
+}
+.cursorring.seen { opacity: 1; }
+.cursorring.grow { width: 66px; height: 66px; margin: -33px 0 0 -33px; background: rgba(255,228,0,.09); border-color: rgba(255,228,0,.75); }
+
+/* clip reveal */
+.clip { clip-path: inset(0 0 100% 0); transition: clip-path 1.3s var(--slow); }
+.clip.lit { clip-path: inset(0 0 0 0); }
+
+@media (max-width: 1100px) { .railnav, .cursorring { display: none; } }
+@media (max-width: 760px) { .ghost { font-size: 22vw; } }
+
+/* boot sequence */
+.boot { position: fixed; inset: 0; z-index: 9800; background: var(--void); display: flex; align-items: center; justify-content: center; transition: clip-path 1s var(--slow), opacity .5s; }
+.boot.gone { clip-path: inset(0 0 100% 0); opacity: 0; pointer-events: none; }
+.boot-in { font-family: var(--mono); font-size: .74rem; letter-spacing: .16em; color: var(--dim); line-height: 2.1; }
+.boot-in b { color: var(--lamp); font-weight: 500; }
+.boot-in p { opacity: 0; }
+.boot-in p.up { animation: bootline .3s var(--ease) forwards; }
+@keyframes bootline { from { opacity: 0; transform: translateY(6px) } to { opacity: 1; transform: none } }
+.boot-skip { position: absolute; bottom: 34px; font-family: var(--mono); font-size: .6rem; letter-spacing: .2em; color: var(--dimmer); }
+
+/* hero grid floor */
+.gridfloor { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: .85; }
+
+/* HUD corner marks */
+.hud { position: relative; }
+.hud::before, .hud::after { content: ''; position: absolute; width: 15px; height: 15px; border: 1px solid var(--lamp); opacity: .5; pointer-events: none; z-index: 4; }
+.hud::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; border-radius: 3px 0 0 0; }
+.hud::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; border-radius: 0 0 3px 0; }
+
+/* quiz */
+.quiz { margin-top: clamp(36px,5vw,60px); border: 1px solid var(--line); border-radius: 22px; background: var(--deck); overflow: hidden; }
+.quiz-top { display: flex; align-items: center; gap: 20px; padding: 20px clamp(22px,3vw,34px); border-bottom: 1px solid var(--line); }
+.quiz-top .mono { color: var(--dimmer); white-space: nowrap; }
+.qbar { flex: 1; height: 2px; background: var(--line); overflow: hidden; border-radius: 2px; }
+.qbar i { display: block; height: 100%; width: 0; background: var(--lamp); box-shadow: 0 0 12px rgba(255,228,0,.7); transition: width .7s var(--slow); }
+.quiz-body { padding: clamp(26px,4vw,46px); min-height: 340px; }
+.qstage { animation: qin .55s var(--slow); }
+@keyframes qin { from { opacity: 0; transform: translateY(22px) } to { opacity: 1; transform: none } }
+.qstage h3 { font-family: var(--display); font-weight: 700; font-size: clamp(1.35rem,2.8vw,2.1rem); line-height: 1.08; letter-spacing: -.03em; max-width: 24ch; }
+.answers { display: grid; gap: 10px; margin-top: 30px; }
+.ans {
+    display: flex; align-items: center; gap: 16px; width: 100%; text-align: left; cursor: pointer;
+    padding: 18px 20px; border-radius: 13px; background: rgba(255,255,255,.035);
+    border: 1px solid var(--line); color: var(--text); font-family: var(--body); font-size: 1rem; font-weight: 300;
+    transition: border-color .35s, background .35s, transform .4s var(--ease);
+    position: relative; overflow: hidden;
+}
+.ans::after { content: ''; position: absolute; inset: 0; background: radial-gradient(300px circle at var(--ax,50%) 50%, rgba(255,228,0,.13), transparent 65%); opacity: 0; transition: opacity .4s; }
+.ans:hover { border-color: rgba(255,228,0,.5); transform: translateX(5px); }
+.ans:hover::after { opacity: 1; }
+.ans .key { flex-shrink: 0; width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--line-2); display: grid; place-items: center; font-family: var(--mono); font-size: .68rem; color: var(--dim); transition: background .35s, color .35s, border-color .35s; }
+.ans:hover .key { background: var(--lamp); color: var(--void); border-color: var(--lamp); }
+.ans.chosen { border-color: var(--lamp); background: rgba(255,228,0,.09); }
+.qback { margin-top: 22px; background: none; border: 0; color: var(--dimmer); font-family: var(--mono); font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; cursor: pointer; transition: color .3s; }
+.qback:hover { color: var(--text); }
+
+/* quiz result */
+.res-top { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.res-top .mono { color: var(--ember); }
+.res h3 { font-family: var(--display); font-weight: 800; font-size: clamp(2rem,4.6vw,3.4rem); line-height: .98; letter-spacing: -.04em; margin: 12px 0 16px; }
+.res h3 span { color: var(--lamp); }
+.res .why { font-weight: 300; line-height: 1.7; color: var(--dim); max-width: 50ch; }
+.bars { margin: 30px 0 26px; display: grid; gap: 12px; }
+.barrow { display: grid; grid-template-columns: 130px 1fr 42px; align-items: center; gap: 14px; }
+.barrow .nm { font-family: var(--mono); font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+.barrow .tr { height: 6px; background: var(--line); border-radius: 6px; overflow: hidden; }
+.barrow .fl { display: block; height: 100%; width: 0; border-radius: 6px; background: linear-gradient(90deg, rgba(255,228,0,.35), var(--lamp)); transition: width 1.1s var(--slow); }
+.barrow .pc { font-family: var(--mono); font-size: .66rem; color: var(--dimmer); text-align: right; }
+.res-acts { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+.res-acts button { padding: 15px 26px; border-radius: 100px; font-family: var(--display); font-weight: 700; font-size: .95rem; cursor: pointer; transition: transform .35s var(--ease), box-shadow .35s, background .3s; }
+.res-acts .go { background: var(--lamp); border: 0; color: var(--void); }
+.res-acts .go:hover { box-shadow: 0 14px 38px rgba(255,228,0,.28); transform: translateY(-2px); }
+.res-acts .again { background: none; border: 1px solid var(--line-2); color: var(--text); }
+.res-acts .again:hover { background: rgba(255,255,255,.06); }
+@media (max-width: 620px) { .barrow { grid-template-columns: 96px 1fr 38px; gap: 10px; } }
+
+/* responsive */
+@media (max-width: 1000px) {
+    .role-grid, .apply-in, .pane.on { grid-template-columns: 1fr; }
+    .cards, .crew { grid-template-columns: 1fr; }
+    .card:nth-child(4) { grid-column: auto; }
+    .counts { grid-template-columns: repeat(2,1fr); gap: 40px 24px; }
+    .hero-foot { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 760px) {
+    .burger { display: block; }
+    .menu {
+        position: fixed; top: 68px; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0;
+        background: rgba(7,8,10,.97); backdrop-filter: blur(20px); border-bottom: 1px solid var(--line);
+        padding: 10px var(--pad) 24px; transform: translateY(-130%); transition: transform .55s var(--slow);
     }
-    .hero video {
-        position: relative; top: auto; left: auto; transform: none !important;
-        width: 100%; height: auto; min-width: 0; min-height: 0;
-        object-fit: contain; display: block;
-    }
-    .hero-overlay { display: none; }
-    .hero-grain { display: none; }
-    .hero-content {
-        position: relative; padding: 34px 24px 40px; width: 100%;
-        background: var(--ink);
-    }
-    .hero h1 { max-width: 100%; }
-    .hero-sub { max-width: 100%; }
-    .scroll-cue { display: none; }
-    /* Spacer not needed when hero is in normal flow */
-    .hero-spacer { display: none; }
-    section { padding: 90px 24px; }
-    .intro-grid { grid-template-columns: 1fr; gap: 44px; }
-    .intro-card { padding: 38px; }
-    .role-row { grid-template-columns: 50px 1fr; gap: 14px 20px; padding: 28px 0; }
-    .role-desc { grid-column: 1 / -1; }
-    .role-row:hover { padding-left: 8px; }
-    .team-grid { grid-template-columns: 1fr; gap: 18px; }
-    .cv-panel { padding: 32px 24px; }
-    .modal-box { padding: 36px 26px; margin: 4vh auto; width: 92%; }
-    .footer-row { flex-direction: column; text-align: center; }
+    .menu.open { transform: none; }
+    .menu a { display: block; padding: 16px 0; font-size: .76rem; }
+    .menu .apply-link { text-align: center; margin-top: 12px; padding: 16px; }
+    .facts { gap: 26px; flex-wrap: wrap; }
+    .pick { grid-template-columns: 1fr; }
+    .row { flex-direction: column; }
+    .frame { border-radius: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+    .rv { opacity: 1; transform: none; }
+    .h1 .w > b, .words .w > b { opacity: 1; transform: none; filter: none; }
+    .frame { transform: none; }
+    .grain { display: none; }
 }
 </style>
 </head>
 <body>
 
-<nav id="nav">
-    <div class="brand">Jumbo · KW Shift B</div>
-    <ul class="nav-links" id="navLinks">
-        <li><a href="#intro">The Role</a></li>
-        <li><a href="#roles">What You Do</a></li>
-        <li><a href="#team">Leaders</a></li>
-        <li><a href="#apply" class="nav-cta">Apply</a></li>
-    </ul>
-    <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+<div class="boot" id="boot">
+    <div class="boot-in" id="bootIn"></div>
+    <span class="boot-skip">Click to skip</span>
+</div>
+<div class="grain" aria-hidden="true"></div>
+<div class="cursorring" id="cring" aria-hidden="true"></div>
+<nav class="railnav" id="railnav" aria-label="Section progress">
+    <a href="#role" data-s="role"><span>Role</span><i></i></a>
+    <a href="#why" data-s="why"><span>Why join</span><i></i></a>
+    <a href="#stations" data-s="stations"><span>Stations</span><i></i></a>
+    <a href="#fit" data-s="fit"><span>Station fit</span><i></i></a>
+    <a href="#crew" data-s="crew"><span>Leaders</span><i></i></a>
+    <a href="#apply" data-s="apply"><span>Apply</span><i></i></a>
 </nav>
+
+<header class="nav" id="nav">
+    <div class="brand"><span class="pulse" aria-hidden="true"></span> Jumbo <span class="div">/</span> KW Shift B</div>
+    <nav>
+        <ul class="menu" id="menu">
+            <li><a href="#role">The role</a></li>
+            <li><a href="#why">Why join</a></li>
+            <li><a href="#stations">Stations</a></li>
+            <li><a href="#fit">Station fit</a></li>
+            <li><a href="#crew">Your leaders</a></li>
+            <li><a href="#apply" class="apply-link">Apply</a></li>
+        </ul>
+    </nav>
+    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="menu"><i></i><i></i></button>
+</header>
+
+<div id="sw"><div id="sc">
 
 <!-- HERO -->
 <section class="hero" id="hero">
-    <video autoplay muted loop playsinline id="heroVideo">
-        <source src="recruitment_video.mp4" type="video/mp4">
-    </video>
-    <div class="hero-overlay"></div>
-    <div class="hero-grain"></div>
-    <div class="hero-content">
-        <div class="hero-eyebrow"><span class="pulse"></span> Now Hiring · Warehouse All-Rounder</div>
-        <h1>
-            <span class="line"><span>Become the</span></span>
-            <span class="line"><span><em>heartbeat</em> of</span></span>
-            <span class="line"><span>KW Shift B</span></span>
+    <canvas class="gridfloor" id="gridfloor" aria-hidden="true"></canvas>
+    <div class="aurora" aria-hidden="true"><i></i><i></i></div>
+    <div class="lamp" id="lamp" aria-hidden="true"></div>
+
+    <div class="hero-inner wrap">
+        <span class="hero-tag mono"><span class="dot"></span> Now hiring · Warehouse All-Rounder</span>
+        <h1 class="h1" id="h1">
+            <span class="l">Run the</span>
+            <span class="l glow">whole</span>
+            <span class="l out">floor.</span>
         </h1>
-        <p class="hero-sub">We're looking for a highly motivated, energetic team player ready to take their warehouse skills to the next level.</p>
+        <div class="hero-foot">
+            <p class="body-lg">One role, five stations, and a shift that never stands still. We're looking for the person KW Shift B leans on.</p>
+            <dl class="facts">
+                <div><dt>Shift</dt><dd>KW · B</dd></div>
+                <div><dt>Stations</dt><dd>Five</dd></div>
+                <div><dt>Start</dt><dd>Soon as you're ready</dd></div>
+            </dl>
+        </div>
     </div>
-    <div class="scroll-cue">
-        <span class="txt">Scroll</span>
-        <span class="track"></span>
+
+    <div class="scroll-hint wrap"><span class="bar"></span><span class="mono">Scroll</span></div>
+</section>
+
+<!-- VIDEO -->
+<section class="reel">
+    <div class="wrap">
+        <div class="frame clip hud" id="frame">
+            <video id="vid" autoplay muted loop playsinline></video>
+            <div class="reel-bar">
+                <span class="mono">Inside the shift</span>
+                <button class="audio" id="audio" aria-pressed="false">
+                    <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span> Sound off
+                </button>
+            </div>
+        </div>
     </div>
 </section>
-<div class="hero-spacer"></div>
 
-<div class="content">
-
-    <!-- INTRO -->
-    <section class="intro" id="intro">
-        <div class="container intro-grid">
-            <div>
-                <div class="tag reveal">The Opportunity</div>
-                <p class="intro-lead reveal reveal-d1">Are you ready to take your warehouse skills to the next level? We're looking for a highly motivated, energetic team player to become the <strong>heartbeat of KW Shift B</strong>.</p>
-            </div>
-            <div class="intro-card reveal reveal-d2">
-                <span class="quote-mark">"</span>
-                <h3>The Hero of the Shift</h3>
-                <p>Being an All-Rounder is more than just a job title. It means you are the glue that holds the shift together. When things get busy or challenges pop up, you are the one the team looks to. You won't just be doing a job; you'll be learning the entire Jumbo operation from the inside out and keeping everything running smoothly.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ROLES -->
-    <section class="roles" id="roles">
-        <div class="container">
-            <div class="roles-head">
-                <div>
-                    <div class="tag reveal">Your Impact</div>
-                    <h2 class="h-section reveal reveal-d1">How you'll make an impact every day</h2>
-                </div>
-                <p class="reveal reveal-d2">Five core responsibilities. One versatile role. You'll move between them seamlessly and keep the whole operation flowing.</p>
-            </div>
-            <div class="roles-list">
-                <div class="role-row reveal">
-                    <div class="role-num">01</div>
-                    <div class="role-name">Help Desk</div>
-                    <div class="role-desc">Put on that famous pink vest and be our go-to expert. Using your laptop, you'll dive into the Jumbo system to fix issues and help your colleagues succeed. You're the one who keeps everyone moving.</div>
-                </div>
-                <div class="role-row reveal">
-                    <div class="role-num">02</div>
-                    <div class="role-name">Reach Truck Driver</div>
-                    <div class="role-desc">Jump in the driver's seat and keep the warehouse flowing. You'll make sure pallets are perfectly placed and refilled in both the KW section and the fresh AGF (fruits and vegetables) area.</div>
-                </div>
-                <div class="role-row reveal">
-                    <div class="role-num">03</div>
-                    <div class="role-name">Order Control</div>
-                    <div class="role-desc">Equip the team with working scanners and keep a sharp eye on our orders, guaranteeing everything leaving our warehouse is top quality and ready to go.</div>
-                </div>
-                <div class="role-row reveal">
-                    <div class="role-num">04</div>
-                    <div class="role-name">Ontvangst</div>
-                    <div class="role-desc">Take charge at the docks. You'll be the first to welcome incoming trucks and dive right into the fast-paced receiving and filling process to keep the stock high.</div>
-                </div>
-                <div class="role-row reveal">
-                    <div class="role-num">05</div>
-                    <div class="role-name">HHD / Housekeeper</div>
-                    <div class="role-desc">A great shift starts with a great environment. You'll lead the way in making sure our department is clean, safe, and an awesome place to work.</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- TEAM -->
-    <section class="team" id="team">
-        <div class="container">
-            <div class="tag reveal">Your Shift Leaders</div>
-            <h2 class="h-section reveal reveal-d1">The people who'll have your back</h2>
-            <p class="team-intro reveal reveal-d2">Behind every great All-Rounder is a great team. These are the leaders who'll guide, support, and grow with you on KW Shift B.</p>
-            <div class="team-grid">
-                <div class="leader reveal">
-                    <h3>Patryk</h3>
-                    <div class="role-label">Team Leader</div>
-                    <div class="bar"></div>
-                </div>
-                <div class="leader reveal reveal-d1">
-                    <h3>Soufiane</h3>
-                    <div class="role-label">Team Leader</div>
-                    <div class="bar"></div>
-                </div>
-                <div class="leader reveal reveal-d2">
-                    <h3>Ed</h3>
-                    <div class="role-label">Team Leader</div>
-                    <div class="bar"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- APPLY -->
-    <section class="apply" id="apply">
-        <div class="apply-inner">
-            <div class="tag reveal">Join Us</div>
-            <h2 class="reveal reveal-d1">This is your <em>shift</em>. Make it count.</h2>
-            <p class="apply-lead reveal reveal-d2">If you're energetic, reliable, and ready to grow, we want to hear from you. Take the first step toward becoming the heartbeat of KW Shift B.</p>
-
-            <div class="cv-panel reveal reveal-d2">
-                <h3>What to include</h3>
-                <div class="cv-items">
-                    <div class="cv-item"><span class="mark"></span><p><strong>Your CV</strong> — tell us about your warehouse experience and the skills you bring to the team.</p></div>
-                    <div class="cv-item"><span class="mark"></span><p><strong>A motivation letter</strong> — share why this role excites you and what makes you the right fit.</p></div>
-                    <div class="cv-item"><span class="mark"></span><p><strong>Your contact details</strong> — so we can get back to you and take the next step together.</p></div>
-                </div>
-            </div>
-
-            <p class="email-line reveal reveal-d2">Send your application directly to <span class="addr">patryk.baumann@jumbo.com</span></p>
-
-            <button class="btn-apply reveal reveal-d3" onclick="openModal()">
-                <span>Send Your CV &amp; Motivation Letter</span>
-                <span class="arrow">→</span>
-            </button>
-        </div>
-    </section>
-
+<!-- MARQUEE -->
+<div class="strip" aria-hidden="true">
+    <div class="strip-track" id="strip">
+        <span>Help desk</span><em>◆</em><span>Reach truck</span><em>◆</em><span>Order control</span><em>◆</em><span>Ontvangst</span><em>◆</em><span>Housekeeping</span><em>◆</em>
+        <span>Help desk</span><em>◆</em><span>Reach truck</span><em>◆</em><span>Order control</span><em>◆</em><span>Ontvangst</span><em>◆</em><span>Housekeeping</span><em>◆</em>
+    </div>
 </div>
 
-<footer>
-    <div class="footer-row">
-        <div class="fbrand">Jumbo · KW Shift B</div>
-        <div>Questions? Reach out at <a href="mailto:patryk.baumann@jumbo.com">patryk.baumann@jumbo.com</a></div>
+<!-- ROLE -->
+<section class="sec" id="role">
+    <span class="ghost" data-drift="-0.42" aria-hidden="true">THE FLOOR IS YOURS</span>
+    <div class="wrap role-grid">
+        <div>
+            <span class="eyebrow mono">The opportunity</span>
+            <h2 class="h2 words">Not a job title. A position on the floor.</h2>
+        </div>
+        <div class="role-copy rv dl1">
+            <p>Ready to take your warehouse skills further? An All-Rounder is the person the shift leans on, the one who steps in wherever the work is and keeps everything moving.</p>
+            <blockquote class="quote">You are the <em>glue</em> that holds the shift together.</blockquote>
+            <p>When it gets busy or something goes wrong, you're the one the team looks to. You won't just be doing a job. You'll learn the entire Jumbo operation from the inside out, station by station.</p>
+        </div>
     </div>
-    <div style="text-align: center; margin-top: 30px; padding-top: 30px; border-top: 1px solid rgba(255,249,236,.1); color: rgba(255,249,236,.35); font-size: 0.85rem;">
-        Web page made and published by Moldovan Arpad Benjamin
+</section>
+
+<!-- WHY -->
+<section class="sec" id="why">
+    <span class="ghost warm" data-drift="0.5" aria-hidden="true">FIVE STATIONS ONE ROLE</span>
+    <div class="wrap">
+        <span class="eyebrow mono">Why this role</span>
+        <h2 class="h2 words" style="max-width:20ch">Most people learn one job. You'll learn the operation.</h2>
+
+        <div class="cards">
+            <article class="card glow-card rv"><span class="tag">Range</span><h3 class="h3">Five skill sets, one role</h3><p>Help desk, reach truck, order control, receiving, housekeeping. You don't specialise into a corner. You build skills that stay with you wherever you go next.</p></article>
+            <article class="card glow-card rv dl1"><span class="tag">Trust</span><h3 class="h3">Be the one they call</h3><p>When a scanner fails or a truck arrives early, the shift looks for you. That trust is earned fast in this role, and it doesn't go unnoticed.</p></article>
+            <article class="card glow-card rv dl2"><span class="tag">Momentum</span><h3 class="h3">No two shifts the same</h3><p>Morning at the docks, afternoon in the pink vest solving problems on the laptop. The day keeps moving, and so do you.</p></article>
+            <article class="card glow-card rv"><span class="tag">Perspective</span><h3 class="h3">See how the whole thing fits together</h3><p>Standing in every station teaches you why the operation works the way it does: how receiving feeds the floor, how order control protects the customer, where the pressure lands when a shift gets busy. That understanding is what separates someone doing a task from someone who can run a shift.</p></article>
+            <article class="card glow-card rv dl1"><span class="tag">Backing</span><h3 class="h3">A team that has your back</h3><p>Three team leaders on Shift B and a floor full of colleagues who'll show you the ropes station by station. You won't be figuring it out alone.</p></article>
+        </div>
+    </div>
+</section>
+
+<!-- COUNTS -->
+<section class="sec" style="padding-top:0">
+    <div class="wrap counts">
+        <div class="count rv"><div class="n" data-to="5">0</div><div class="t">Stations to master</div></div>
+        <div class="count rv dl1"><div class="n" data-to="3">0</div><div class="t">Leaders behind you</div></div>
+        <div class="count rv dl2"><div class="n" data-to="1">0</div><div class="t">Role, whole operation</div></div>
+        <div class="count rv dl3"><div class="n" data-to="0">0</div><div class="t">Boring shifts</div></div>
+    </div>
+</section>
+
+<!-- STATIONS -->
+<section class="sec" id="stations">
+    <span class="ghost" data-drift="-0.55" aria-hidden="true">ROTATE ROTATE ROTATE</span>
+    <div class="wrap">
+        <span class="eyebrow mono">Your impact</span>
+        <h2 class="h2 words">Five stations. One shift. You rotate through all of them.</h2>
+
+        <div class="board hud rv dl1">
+            <div class="rail" role="tablist" aria-label="Warehouse stations">
+                <button class="stn" role="tab" id="s0" aria-controls="q0" aria-selected="true"><span class="k">HD</span><span class="v">Help desk</span></button>
+                <button class="stn" role="tab" id="s1" aria-controls="q1" aria-selected="false" tabindex="-1"><span class="k">RT</span><span class="v">Reach truck</span></button>
+                <button class="stn" role="tab" id="s2" aria-controls="q2" aria-selected="false" tabindex="-1"><span class="k">OC</span><span class="v">Order control</span></button>
+                <button class="stn" role="tab" id="s3" aria-controls="q3" aria-selected="false" tabindex="-1"><span class="k">ONT</span><span class="v">Ontvangst</span></button>
+                <button class="stn" role="tab" id="s4" aria-controls="q4" aria-selected="false" tabindex="-1"><span class="k">HHD</span><span class="v">Housekeeping</span></button>
+                <span class="ink" id="ink" aria-hidden="true"></span>
+            </div>
+
+            <div class="pane on" role="tabpanel" id="q0" aria-labelledby="s0" tabindex="0">
+                <div><h3>Help <span>desk</span></h3><p class="d">Put on the famous pink vest and be the go-to expert. With your laptop you dive into the Jumbo system to fix issues and help colleagues succeed. You're the one who keeps everyone moving.</p></div>
+                <div class="kit"><div>Pink vest</div><div>Laptop</div><div>Jumbo system</div></div>
+            </div>
+            <div class="pane" role="tabpanel" id="q1" aria-labelledby="s1" tabindex="0">
+                <div><h3>Reach <span>truck</span></h3><p class="d">Take the driver's seat and keep the warehouse flowing. You make sure pallets are placed and refilled exactly where they belong, in the KW section and in the fresh AGF area.</p></div>
+                <div class="kit"><div>Reach truck</div><div>KW section</div><div>AGF · fresh</div></div>
+            </div>
+            <div class="pane" role="tabpanel" id="q2" aria-labelledby="s2" tabindex="0">
+                <div><h3>Order <span>control</span></h3><p class="d">Equip the team with working scanners and keep a sharp eye on the orders, so everything leaving the warehouse is top quality and ready to go.</p></div>
+                <div class="kit"><div>Scanners</div><div>Quality check</div><div>Outbound</div></div>
+            </div>
+            <div class="pane" role="tabpanel" id="q3" aria-labelledby="s3" tabindex="0">
+                <div><h3>Ont<span>vangst</span></h3><p class="d">Take charge at the docks. You're first to welcome incoming trucks and dive straight into the fast-paced receiving and filling process that keeps stock high.</p></div>
+                <div class="kit"><div>Docks</div><div>Inbound trucks</div><div>Stock</div></div>
+            </div>
+            <div class="pane" role="tabpanel" id="q4" aria-labelledby="s4" tabindex="0">
+                <div><h3>House<span>keeping</span></h3><p class="d">A great shift starts with a great environment. You lead the way in keeping the department clean, safe, and a place people actually want to work.</p></div>
+                <div class="kit"><div>HHD</div><div>Safety</div><div>Department</div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STATION FIT -->
+<section class="sec" id="fit">
+    <span class="ghost warm" data-drift="0.38" aria-hidden="true">WHICH STATION</span>
+    <div class="wrap">
+        <span class="eyebrow mono">Interactive</span>
+        <h2 class="h2 words">Which station would you start strongest at?</h2>
+        <p class="body-lg rv dl1" style="max-width:46ch;margin-top:20px">Five quick questions. You will rotate through all five stations anyway, but this is the one where you would hit the ground running.</p>
+
+        <div class="quiz hud rv dl1" id="quiz">
+            <div class="quiz-top">
+                <span class="mono" id="qCount">Question 1 of 5</span>
+                <div class="qbar"><i id="qBar"></i></div>
+            </div>
+            <div class="quiz-body" id="qBody"></div>
+        </div>
+    </div>
+</section>
+
+<!-- CREW -->
+<section class="sec" id="crew">
+    <span class="ghost" data-drift="0.4" aria-hidden="true">SHIFT B SHIFT B</span>
+    <div class="wrap">
+        <span class="eyebrow mono">Your shift leaders</span>
+        <h2 class="h2 words">The people who have your back</h2>
+        <div class="crew">
+            <article class="person glow-card rv"><span class="r">Team lead</span><h3>Miroslaw</h3><p class="s">KW Shift B</p></article>
+            <article class="person glow-card rv dl1"><span class="r">Team lead</span><h3>Soufiane</h3><p class="s">KW Shift B</p></article>
+            <article class="person glow-card rv dl2"><span class="r">Team lead</span><h3>Ed</h3><p class="s">KW Shift B</p></article>
+        </div>
+    </div>
+</section>
+
+<!-- APPLY -->
+<section class="apply" id="apply">
+    <span class="ghost warm" data-drift="-0.46" aria-hidden="true">MAKE IT COUNT</span>
+    <div class="wrap apply-in">
+        <div class="rv">
+            <span class="eyebrow mono">Join us</span>
+            <h2>This is your <em>shift</em>. Make it count.</h2>
+            <p class="body-lg" style="margin-top:24px;max-width:38ch">Send your details in under a minute. You choose which email account sends your documents: Gmail, Outlook, or your own mail app.</p>
+            <button class="big-btn" id="openBtn">Start your application <span class="a" aria-hidden="true">→</span></button>
+        </div>
+        <div class="need rv dl1">
+            <div><span class="i">01</span><p><strong>Your CV.</strong> Your warehouse experience and the skills you bring to the team.</p></div>
+            <div><span class="i">02</span><p><strong>A motivation letter.</strong> Why this role excites you and what makes you the right fit.</p></div>
+            <div><span class="i">03</span><p><strong>Your contact details.</strong> So Miroslaw can reach you and take the next step.</p></div>
+        </div>
+    </div>
+</section>
+
+<footer class="foot">
+    <div class="wrap">
+        <div class="foot-top">
+            <span class="b">Jumbo / KW Shift B</span>
+            <span class="mono">Questions? <a href="mailto:miroslaw.medrzechowski@jumbo.com">miroslaw.medrzechowski@jumbo.com</a></span>
+        </div>
+        <div class="fine">Web page made and published by Moldovan Arpad Benjamin</div>
     </div>
 </footer>
 
+</div></div>
+
 <!-- MODAL -->
-<div class="modal" id="modal">
-    <div class="modal-box">
-        <button class="close" onclick="closeModal()">&times;</button>
-        <div class="tag">Application</div>
-        <h2>Apply for KW Shift B</h2>
-        <p class="m-sub">Fill in your details below and tap "Open Email." Your email app will open with everything already written and addressed to Patryk — just attach your CV and motivation letter, then send.</p>
-        <form id="appForm">
-            <div class="field"><label for="name">Full Name</label><input type="text" id="name" required></div>
-            <div class="field"><label for="email">Email</label><input type="email" id="email" required></div>
-            <div class="field"><label for="phone">Phone</label><input type="tel" id="phone" required></div>
-            <div class="field"><label for="exp">Your Warehouse Experience</label><textarea id="exp" placeholder="Briefly describe your relevant experience..." required></textarea></div>
-            <div class="field"><label for="mot">Why KW Shift B?</label><textarea id="mot" placeholder="What motivates you about this role..." required></textarea></div>
-            <div class="m-note"><strong>Note:</strong> Please remember to attach your <strong>CV</strong> and <strong>motivation letter</strong> to the email before sending. The application goes to patryk.baumann@jumbo.com.</div>
-            <div class="m-actions">
-                <button type="button" class="btn-ghost" onclick="closeModal()">Cancel</button>
-                <button type="submit" class="btn-send">Open Email &amp; Send</button>
+<div class="veil" id="veil" role="dialog" aria-modal="true" aria-labelledby="mt">
+    <div class="sheet">
+        <div class="sheet-top">
+            <span class="mono">Application · KW Shift B</span>
+            <button class="shut" id="shut" aria-label="Close">&times;</button>
+        </div>
+        <div class="sheet-in">
+
+            <div class="step on" id="k1">
+                <h2 id="mt">Your details</h2>
+                <p class="say">Step 1 of 2. This goes straight to Miroslaw with your email address attached, so he replies to you and not to whichever account your phone uses.</p>
+                <div class="warn" id="warn" hidden></div>
+                <form id="form">
+                    <div class="f"><label for="name">Full name</label><input id="name" type="text" required placeholder="Jan Novak"></div>
+                    <div class="f"><label for="email">Your email</label><input id="email" type="email" required placeholder="jan@example.com"></div>
+                    <div class="f"><label for="phone">Phone</label><input id="phone" type="tel" required placeholder="+31 6 12345678"></div>
+                    <div class="f"><label for="exp">Warehouse experience</label><textarea id="exp" required placeholder="Where you've worked and what you did there…"></textarea></div>
+                    <div class="f"><label for="mot">Why KW Shift B?</label><textarea id="mot" required placeholder="What draws you to this role…"></textarea></div>
+                    <input type="checkbox" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" id="hp">
+                    <div class="row">
+                        <button type="button" class="b-ghost" id="cancel">Cancel</button>
+                        <button type="submit" class="b-solid" id="send">Send my details</button>
+                    </div>
+                </form>
             </div>
-        </form>
+
+            <div class="step" id="k2">
+                <div class="loading"><div class="ring" aria-hidden="true"></div><p class="mono" style="color:var(--dimmer)">Sending your details…</p></div>
+            </div>
+
+            <div class="step" id="k3">
+                <div class="done" aria-hidden="true">&check;</div>
+                <h2>Sent. Now attach your CV.</h2>
+                <p class="say">Step 2 of 2. Your full application is already written into the message, with every answer you gave plus your reference. Pick where to send it from, attach your CV and motivation letter, and send.</p>
+                <div class="ref"><span class="mono">Your reference</span><b id="refOut">···</b></div>
+
+                <div class="pick">
+                    <button class="prov" data-p="gmail">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M2 6.5 12 13l10-6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="4.5" width="20" height="15" rx="2.5" stroke="currentColor" stroke-width="1.6"/></svg>
+                        <span>Gmail<small>Opens in a new tab</small></span>
+                    </button>
+                    <button class="prov" data-p="outlook">
+                        <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="4.5" width="20" height="15" rx="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M2 8h20" stroke="currentColor" stroke-width="1.6"/></svg>
+                        <span>Outlook<small>Opens in a new tab</small></span>
+                    </button>
+                    <button class="prov" data-p="yahoo">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M4 6l8 7 8-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><rect x="2.5" y="5" width="19" height="14" rx="2.5" stroke="currentColor" stroke-width="1.6"/></svg>
+                        <span>Yahoo Mail<small>Opens in a new tab</small></span>
+                    </button>
+                    <button class="prov" data-p="app">
+                        <svg viewBox="0 0 24 24" fill="none"><rect x="4.5" y="2.5" width="15" height="19" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M10 18.5h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                        <span>My mail app<small>Outlook, Apple Mail, Thunderbird</small></span>
+                    </button>
+                </div>
+                <div class="copy-row"><button id="copyBtn">Copy the message instead</button></div>
+
+                <div class="row"><button type="button" class="b-ghost" id="doneBtn">I'll send it later</button></div>
+            </div>
+
+        </div>
     </div>
 </div>
 
 <script>
-// NAV scroll state
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-    const past = window.scrollY > window.innerHeight * 0.85;
-    nav.classList.toggle('scrolled', past);
+(function () {
+'use strict';
+
+/* ============================================================
+   SETUP. One thing to do before publishing.
+   Get a free access key at https://web3forms.com (destination:
+   miroslaw.medrzechowski@jumbo.com, then confirm the link in that
+   inbox) and paste it below. Free plan, no card needed.
+   Until it's set, the form falls back to a single email instead.
+   ============================================================ */
+var ACCESS_KEY = 'PASTE_YOUR_WEB3FORMS_ACCESS_KEY_HERE';
+var TO = 'miroslaw.medrzechowski@jumbo.com';
+var VIDEO = 'recruitment_video.mp4';
+
+var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+var fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+var desktop = matchMedia('(min-width: 1000px)').matches;
+var $ = function (id) { return document.getElementById(id); };
+
+/* video (set src late so it never blocks first paint) */
+var vid = $('vid');
+vid.src = VIDEO;
+var p = vid.play(); if (p && p.catch) p.catch(function () {});
+var audio = $('audio');
+audio.addEventListener('click', function () {
+    vid.muted = !vid.muted;
+    audio.classList.toggle('live', !vid.muted);
+    audio.lastChild.textContent = vid.muted ? ' Sound off' : ' Sound on';
+    audio.setAttribute('aria-pressed', String(!vid.muted));
 });
 
-// Mobile menu
-const toggle = document.getElementById('navToggle');
-const navLinks = document.getElementById('navLinks');
-toggle.addEventListener('click', () => {
-    toggle.classList.toggle('active');
-    navLinks.classList.toggle('open');
-});
-navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    toggle.classList.remove('active'); navLinks.classList.remove('open');
-}));
-
-// HERO fade + parallax zoom (desktop only — on mobile the hero is in normal flow)
-const hero = document.getElementById('hero');
-const heroVideo = document.getElementById('heroVideo');
-const isMobile = () => window.matchMedia('(max-width: 860px)').matches;
-function heroScroll() {
-    if (isMobile()) { hero.style.opacity = ''; hero.style.transform = ''; heroVideo.style.transform = ''; hero.style.pointerEvents = ''; return; }
-    const sy = window.scrollY;
-    const h = window.innerHeight;
-    const op = Math.max(0, 1 - (sy / h));
-    hero.style.opacity = op;
-    hero.style.transform = `scale(${1 - Math.min(sy/h,1)*0.06})`;
-    heroVideo.style.transform = `translate(-50%,-50%) scale(${1 + Math.min(sy/h,1)*0.18})`;
-    if (op <= 0) { hero.style.pointerEvents = 'none'; } else { hero.style.pointerEvents = 'auto'; }
+/* split words for the reveal */
+function splitWords(el) {
+    var out = '';
+    el.querySelectorAll('.l').length
+        ? el.querySelectorAll('.l').forEach(function (l) {
+            l.innerHTML = l.textContent.trim().split(/\s+/).map(function (w) {
+                return '<span class="w"><b>' + w + '</b></span>';
+            }).join(' ');
+          })
+        : (out = el.textContent.trim().split(/\s+/).map(function (w, i) {
+            return '<span class="w"><b style="transition-delay:' + (i * 40) + 'ms">' + w + '</b></span>';
+          }).join(' '), el.innerHTML = out);
 }
-window.addEventListener('scroll', heroScroll);
-window.addEventListener('resize', heroScroll);
+splitWords($('h1'));
+$('h1').querySelectorAll('.w > b').forEach(function (b, i) { b.style.transitionDelay = (i * 70 + 120) + 'ms'; });
+document.querySelectorAll('.words').forEach(splitWords);
+requestAnimationFrame(function () { $('h1').classList.add('lit'); });
 
-// REVEAL on scroll
-const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-}, { threshold: 0.18 });
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+/* reveal on enter */
+var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('lit'); io.unobserve(e.target); } });
+}, { threshold: .18, rootMargin: '0px 0px -6% 0px' });
+document.querySelectorAll('.rv, .words').forEach(function (el) { io.observe(el); });
 
-// MODAL
-const modal = document.getElementById('modal');
-function openModal() { modal.classList.add('open'); document.body.style.overflow = 'hidden'; }
-function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
-modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+/* counters */
+var cio = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        cio.unobserve(e.target);
+        var el = e.target, to = +el.dataset.to, t0 = null;
+        if (reduce || !to) { el.textContent = to; return; }
+        requestAnimationFrame(function tick(t) {
+            t0 = t0 || t;
+            var k = Math.min((t - t0) / 1100, 1);
+            el.textContent = Math.round(to * (1 - Math.pow(1 - k, 4)));
+            if (k < 1) requestAnimationFrame(tick);
+        });
+    });
+}, { threshold: .6 });
+document.querySelectorAll('[data-to]').forEach(function (el) { cio.observe(el); });
 
-document.getElementById('appForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const phone = document.getElementById('phone').value;
-    const exp = document.getElementById('exp').value;
-    const mot = document.getElementById('mot').value;
-    const subject = encodeURIComponent('Application — Warehouse All-Rounder, KW Shift B — ' + name);
-    const body = encodeURIComponent(
-        'Dear Patryk,\n\nI would like to apply for the Warehouse All-Rounder position on KW Shift B.\n\n' +
-        'CONTACT DETAILS\nName: ' + name + '\nEmail: ' + email + '\nPhone: ' + phone + '\n\n' +
-        'WAREHOUSE EXPERIENCE\n' + exp + '\n\n' +
-        'MOTIVATION\n' + mot + '\n\n' +
-        'I have attached my CV and motivation letter to this email.\n\nKind regards,\n' + name
-    );
-    window.location.href = 'mailto:patryk.baumann@jumbo.com?subject=' + subject + '&body=' + body;
-    setTimeout(closeModal, 400);
+/* station board */
+var stns = [].slice.call(document.querySelectorAll('.stn'));
+var panes = [].slice.call(document.querySelectorAll('.pane'));
+var ink = $('ink');
+function moveInk(el) { ink.style.width = el.offsetWidth + 'px'; ink.style.transform = 'translateX(' + el.offsetLeft + 'px)'; }
+function pickStation(i, focus) {
+    stns.forEach(function (s, n) {
+        var on = n === i;
+        s.setAttribute('aria-selected', String(on));
+        s.tabIndex = on ? 0 : -1;
+        panes[n].classList.toggle('on', on);
+    });
+    moveInk(stns[i]);
+    if (focus) stns[i].focus();
+}
+stns.forEach(function (s, i) {
+    s.addEventListener('click', function () { pickStation(i); });
+    s.addEventListener('keydown', function (e) {
+        var n = null;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') n = (i + 1) % stns.length;
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') n = (i - 1 + stns.length) % stns.length;
+        if (e.key === 'Home') n = 0;
+        if (e.key === 'End') n = stns.length - 1;
+        if (n !== null) { e.preventDefault(); pickStation(n, true); }
+    });
+});
+requestAnimationFrame(function () { moveInk(stns[0]); });
+
+/* depth parallax: elements drift at their own speed as they cross the screen */
+var depths = [];
+function addDepth(sel, d, step) {
+    document.querySelectorAll(sel).forEach(function (el, i) {
+        depths.push({ el: el, d: d + (step || 0) * i });
+    });
+}
+addDepth('.eyebrow', .055);
+addDepth('.role-copy', -.045);
+addDepth('.quote', .05);
+addDepth('.cards .card', .03, .022);
+addDepth('.counts .count', -.02, .028);
+addDepth('.kit', .06);
+addDepth('.crew .person', .02, .03);
+addDepth('.need', -.04);
+addDepth('.facts', .07);
+var drifters = [].slice.call(document.querySelectorAll('[data-drift]'));
+
+/* the ring that trails the cursor */
+var cring = $('cring'), crx = 0, cry = 0, ctx = 0, cty = 0, cseen = false;
+if (fine) {
+    addEventListener('pointermove', function (e) {
+        ctx = e.clientX; cty = e.clientY;
+        if (!cseen) { crx = ctx; cry = cty; cseen = true; cring.classList.add('seen'); }
+    });
+    document.querySelectorAll('a, button, .card, .person, input, textarea').forEach(function (el) {
+        el.addEventListener('pointerenter', function () { cring.classList.add('grow'); });
+        el.addEventListener('pointerleave', function () { cring.classList.remove('grow'); });
+    });
+}
+
+/* station names scramble when you hover them */
+var GLYPH = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ#%&*';
+function scramble(el) {
+    if (reduce || el.dataset.busy) return;
+    var real = el.dataset.real || el.textContent;
+    el.dataset.real = real; el.dataset.busy = '1';
+    var f = 0, total = 16;
+    var id = setInterval(function () {
+        f++;
+        el.textContent = real.split('').map(function (ch, i) {
+            if (ch === ' ') return ' ';
+            return i < (f / total) * real.length ? ch : GLYPH[(Math.random() * GLYPH.length) | 0];
+        }).join('');
+        if (f >= total) { clearInterval(id); el.textContent = real; el.dataset.busy = ''; }
+    }, 26);
+}
+document.querySelectorAll('.stn .v').forEach(function (v) {
+    v.parentElement.addEventListener('pointerenter', function () { scramble(v); });
 });
 
-// Ensure autoplay
-heroVideo.play().catch(()=>{});
-heroScroll();
+/* section rail */
+var railLinks = [].slice.call(document.querySelectorAll('.railnav a'));
+var railSecs = railLinks.map(function (a) { return document.getElementById(a.dataset.s); });
+
+/* pointer glow on cards */
+if (fine) {
+    document.querySelectorAll('.glow-card').forEach(function (c) {
+        c.addEventListener('pointermove', function (e) {
+            var r = c.getBoundingClientRect();
+            c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+            c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+        });
+    });
+    var btn = $('openBtn');
+    btn.addEventListener('pointermove', function (e) {
+        var r = btn.getBoundingClientRect();
+        btn.style.transform = 'translate(' + ((e.clientX - r.left - r.width / 2) * .18).toFixed(1) + 'px,' +
+                                             ((e.clientY - r.top - r.height / 2) * .3).toFixed(1) + 'px)';
+    });
+    btn.addEventListener('pointerleave', function () { btn.style.transform = ''; });
+}
+
+/* menu */
+var burger = $('burger'), menu = $('menu');
+burger.addEventListener('click', function () {
+    var open = menu.classList.toggle('open');
+    burger.classList.toggle('on', open);
+    burger.setAttribute('aria-expanded', String(open));
+});
+
+/* ============================================================
+   SMOOTH SCROLL. The page content is translated with easing so
+   scrolling glides instead of snapping. Desktop only; touch and
+   reduced-motion keep the native behaviour.
+   ============================================================ */
+var sw = $('sw'), sc = $('sc');
+var smooth = desktop && fine && !reduce;
+var cur = 0, aim = 0;
+
+if (smooth) {
+    document.documentElement.classList.add('smooth');
+    var setH = function () { document.body.style.height = sc.getBoundingClientRect().height + 'px'; };
+    setH();
+    if (window.ResizeObserver) new ResizeObserver(setH).observe(sc);
+    window.addEventListener('resize', setH);
+}
+
+/* anchor links -> animate the real scroll position */
+document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+        var el = document.querySelector(a.getAttribute('href'));
+        if (!el) return;
+        e.preventDefault();
+        menu.classList.remove('open'); burger.classList.remove('on');
+        var y = el.getBoundingClientRect().top + (smooth ? cur : window.scrollY) - 60;
+        window.scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
+    });
+});
+
+/* one render loop for everything scroll-driven */
+var strip = $('strip'), frame = $('frame'), nav = $('nav'), lamp = $('lamp'), hero = $('hero');
+var stripX = 0, lastY = 0, lx = 0, ly = 0, tx = 0, ty = 0, hasPointer = false;
+
+if (fine) {
+    hero.addEventListener('pointermove', function (e) {
+        var r = hero.getBoundingClientRect();
+        tx = e.clientX - r.left; ty = e.clientY - r.top; hasPointer = true;
+    });
+}
+
+function loop(now) {
+    aim = window.scrollY;
+    if (!reduce && heroEl.getBoundingClientRect().bottom > 0) drawFloor(now || 0);
+    if (smooth) {
+        cur += (aim - cur) * .09;
+        if (Math.abs(aim - cur) < .06) cur = aim;
+        sw.style.transform = 'translate3d(0,' + (-cur).toFixed(2) + 'px,0)';
+    } else { cur = aim; }
+
+    nav.classList.toggle('lit', cur > 40);
+
+    if (!reduce) {
+        /* marquee drifts, and scrolling pushes it along */
+        var vel = cur - lastY; lastY = cur;
+        stripX -= .55 + Math.min(Math.abs(vel) * .16, 7);
+        var half = strip.scrollWidth / 2;
+        if (half && stripX <= -half) stripX += half;
+        strip.style.transform = 'translateX(' + stripX.toFixed(1) + 'px)';
+
+        /* video frame grows into place as it enters the viewport */
+        var r = frame.getBoundingClientRect();
+        var k = 1 - Math.min(Math.max((r.top - innerHeight * .1) / (innerHeight * .82), 0), 1);
+        frame.style.transform = 'scale(' + (.88 + .12 * k).toFixed(4) + ')';
+        frame.style.borderRadius = (20 - 8 * k).toFixed(1) + 'px';
+
+        /* lamp trails the cursor across the hero */
+        if (hasPointer) {
+            lx += (tx - lx) * .1; ly += (ty - ly) * .1;
+            lamp.style.transform = 'translate3d(' + lx.toFixed(1) + 'px,' + ly.toFixed(1) + 'px,0)';
+        }
+
+        /* every depth layer drifts at its own rate */
+        for (var i = 0; i < depths.length; i++) {
+            var o = depths[i], b = o.el.getBoundingClientRect();
+            if (b.bottom < -250 || b.top > innerHeight + 250) continue;
+            var mid = b.top + b.height / 2 - innerHeight / 2;
+            o.el.style.transform = 'translate3d(0,' + (-mid * o.d).toFixed(1) + 'px,0)';
+        }
+
+        /* giant words slide sideways behind the content */
+        for (var j = 0; j < drifters.length; j++) {
+            var g = drifters[j], gb = g.getBoundingClientRect();
+            if (gb.bottom < -400 || gb.top > innerHeight + 400) continue;
+            var q = 1 - (gb.top + gb.height) / (innerHeight + gb.height);
+            g.style.transform = 'translate3d(' + (q * parseFloat(g.dataset.drift) * 900).toFixed(0) + 'px,-50%,0)';
+        }
+
+        /* the page leans into the scroll, then straightens */
+        if (smooth) {
+            var lean = Math.max(-2.1, Math.min(2.1, (aim - cur) * .055));
+            sc.style.transform = 'skewY(' + lean.toFixed(3) + 'deg)';
+        }
+
+        /* cursor ring eases toward the pointer */
+        if (cseen) {
+            crx += (ctx - crx) * .17; cry += (cty - cry) * .17;
+            cring.style.transform = 'translate3d(' + crx.toFixed(1) + 'px,' + cry.toFixed(1) + 'px,0)';
+        }
+
+        /* which section is in view */
+        for (var k = 0; k < railSecs.length; k++) {
+            var rb = railSecs[k].getBoundingClientRect();
+            railLinks[k].classList.toggle('on', rb.top < innerHeight * .45 && rb.bottom > innerHeight * .45);
+        }
+    }
+    requestAnimationFrame(loop);
+}
+loop();
+
+/* ============================================================
+   BOOT SEQUENCE. A short terminal wipe on first arrival.
+   ============================================================ */
+(function () {
+    var boot = $('boot'), inner = $('bootIn');
+    var seen = false;
+    try { seen = sessionStorage.getItem('kwb_boot') === '1'; } catch (e) {}
+    if (seen || reduce) { boot.classList.add('gone'); return; }
+
+    var lines = [
+        'KW SHIFT B <b>//</b> TERMINAL',
+        'LOADING STATION DATA <b>OK</b>',
+        'SYNCING ROTATION <b>OK</b>',
+        'FIVE STATIONS ONLINE <b>OK</b>',
+        '<b>READY</b>'
+    ];
+    inner.innerHTML = lines.map(function (l) { return '<p>' + l + '</p>'; }).join('');
+    var ps = inner.querySelectorAll('p');
+    ps.forEach(function (el, i) { setTimeout(function () { el.classList.add('up'); }, 130 + i * 190); });
+
+    var end = function () {
+        boot.classList.add('gone');
+        try { sessionStorage.setItem('kwb_boot', '1'); } catch (e) {}
+    };
+    var timer = setTimeout(end, 1500);
+    boot.addEventListener('click', function () { clearTimeout(timer); end(); });
+})();
+
+/* ============================================================
+   HERO FLOOR. A warehouse floor in perspective, running toward you.
+   ============================================================ */
+var heroEl = $('hero');
+var gf = $('gridfloor'), gx = gf.getContext('2d'), gw = 0, gh = 0, dpr = Math.min(devicePixelRatio || 1, 2);
+function sizeFloor() {
+    gw = heroEl.clientWidth; gh = heroEl.clientHeight;
+    gf.width = gw * dpr; gf.height = gh * dpr;
+    gf.style.width = gw + 'px'; gf.style.height = gh + 'px';
+    gx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+sizeFloor();
+addEventListener('resize', sizeFloor);
+
+function drawFloor(t) {
+    gx.clearRect(0, 0, gw, gh);
+    var hz = gh * 0.66, vx = gw / 2;
+    gx.lineWidth = 1;
+
+    for (var i = -16; i <= 16; i++) {
+        var spread = i * (gw / 7);
+        gx.strokeStyle = 'rgba(255,228,0,' + (0.11 - Math.abs(i) * 0.005) + ')';
+        if (0.11 - Math.abs(i) * 0.005 <= 0) continue;
+        gx.beginPath(); gx.moveTo(vx + spread * 0.06, hz); gx.lineTo(vx + spread, gh); gx.stroke();
+    }
+    var off = (t * 0.00016) % 1;
+    for (var j = 0; j < 20; j++) {
+        var k = (j + off) / 20, y = hz + (gh - hz) * Math.pow(k, 2.6);
+        gx.strokeStyle = 'rgba(255,228,0,' + (0.16 * k).toFixed(3) + ')';
+        gx.beginPath(); gx.moveTo(0, y); gx.lineTo(gw, y); gx.stroke();
+    }
+    var sw2 = (t * 0.00022) % 1.6 - 0.3;
+    if (sw2 > 0 && sw2 < 1) {
+        var sy = hz + (gh - hz) * Math.pow(sw2, 2.6);
+        var g = gx.createLinearGradient(0, sy - 26, 0, sy + 26);
+        g.addColorStop(0, 'rgba(255,228,0,0)');
+        g.addColorStop(.5, 'rgba(255,228,0,.16)');
+        g.addColorStop(1, 'rgba(255,228,0,0)');
+        gx.fillStyle = g; gx.fillRect(0, sy - 26, gw, 52);
+    }
+}
+
+/* ============================================================
+   STATION FIT. Five questions, scored across the five stations.
+   The result feeds straight into the application.
+   ============================================================ */
+var STATIONS = {
+    hd:  { name: 'Help desk',    line: 'You go where the problem is. People find you before they find the manual.' },
+    rt:  { name: 'Reach truck',  line: 'You like the controls in your hands and the floor moving because of you.' },
+    oc:  { name: 'Order control',line: 'Nothing wrong leaves on your watch. You catch what everyone else walks past.' },
+    ont: { name: 'Ontvangst',    line: 'You want the doors, the pace, and the truck turned around before it is due.' },
+    hk:  { name: 'Housekeeping', line: 'You keep the floor safe and clear, which is what lets everyone else move fast.' }
+};
+var QS = [
+    { q: 'It is the busiest hour of the shift. Where do you want to be?', a: [
+        ['Wherever the problem is, sorting it out', 'hd'],
+        ['Behind the controls, keeping stock moving', 'rt'],
+        ['On the orders, making sure nothing goes out wrong', 'oc'],
+        ['At the doors, where everything arrives', 'ont'] ] },
+    { q: 'What do colleagues usually come to you for?', a: [
+        ['Help when something stops working', 'hd'],
+        ['A steady hand with the machinery', 'rt'],
+        ['A second pair of eyes before it ships', 'oc'],
+        ['Pace when there is a lot to shift', 'ont'] ] },
+    { q: 'Five in the morning. Which would you mind the least?', a: [
+        ['Explaining the system again to someone new', 'hd'],
+        ['Long quiet stretches alone in the aisles', 'rt'],
+        ['Checking the same list one more time', 'oc'],
+        ['Emptying a full truck before the shift wakes up', 'ont'] ] },
+    { q: 'A machine goes down mid shift. What is your first move?', a: [
+        ['Work out what broke and get it running', 'hd'],
+        ['Reroute the work so the floor keeps flowing', 'rt'],
+        ['Flag what is now at risk further down the line', 'oc'],
+        ['Clear the area so nothing else gets stuck', 'hk'] ] },
+    { q: 'What makes a shift feel good when you clock out?', a: [
+        ['Nobody stayed stuck for long', 'hd'],
+        ['Every pallet ended up where it belongs', 'rt'],
+        ['Zero errors went out the door', 'oc'],
+        ['A department you would be proud to hand over', 'hk'] ] }
+];
+
+var qBody = $('qBody'), qBar = $('qBar'), qCount = $('qCount');
+var qi = 0, score = { hd: 0, rt: 0, oc: 0, ont: 0, hk: 0 }, picks = [];
+window.__fit = null;
+
+function paintQ() {
+    var item = QS[qi];
+    qCount.textContent = 'Question ' + (qi + 1) + ' of ' + QS.length;
+    qBar.style.width = (qi / QS.length * 100) + '%';
+    qBody.innerHTML = '<div class="qstage"><h3>' + item.q + '</h3><div class="answers">' +
+        item.a.map(function (a, i) {
+            return '<button class="ans" data-k="' + a[1] + '"><span class="key">' +
+                   'ABCD'[i] + '</span><span>' + a[0] + '</span></button>';
+        }).join('') +
+        '</div>' + (qi > 0 ? '<button class="qback" id="qback">Back one question</button>' : '') + '</div>';
+
+    qBody.querySelectorAll('.ans').forEach(function (b) {
+        b.addEventListener('pointermove', function (e) {
+            b.style.setProperty('--ax', (e.clientX - b.getBoundingClientRect().left) + 'px');
+        });
+        b.addEventListener('click', function () {
+            b.classList.add('chosen');
+            score[b.dataset.k]++; picks.push(b.dataset.k);
+            setTimeout(function () { qi++; qi < QS.length ? paintQ() : paintResult(); }, 240);
+        });
+    });
+    var bk = $('qback');
+    if (bk) bk.addEventListener('click', function () { qi--; score[picks.pop()]--; paintQ(); });
+}
+
+function paintResult() {
+    qCount.textContent = 'Your result';
+    qBar.style.width = '100%';
+    var order = Object.keys(score).sort(function (a, b) { return score[b] - score[a]; });
+    var top = order[0], best = STATIONS[top];
+    window.__fit = best.name;
+
+    qBody.innerHTML = '<div class="qstage res">' +
+        '<div class="res-top"><span class="mono">Strongest match</span></div>' +
+        '<h3>You would start strongest at <span>' + best.name + '</span></h3>' +
+        '<p class="why">' + best.line + ' You will still rotate through all five stations, but this is the one where you would be useful on day one.</p>' +
+        '<div class="bars">' + order.slice(0, 4).map(function (k) {
+            var pc = Math.round(score[k] / QS.length * 100);
+            return '<div class="barrow"><span class="nm">' + STATIONS[k].name +
+                   '</span><span class="tr"><i class="fl" data-w="' + pc + '"></i></span>' +
+                   '<span class="pc">' + pc + '%</span></div>';
+        }).join('') + '</div>' +
+        '<div class="res-acts">' +
+        '<button class="go" id="fitApply">Apply with this result</button>' +
+        '<button class="again" id="fitAgain">Take it again</button>' +
+        '</div></div>';
+
+    requestAnimationFrame(function () {
+        qBody.querySelectorAll('.fl').forEach(function (f) { f.style.width = f.dataset.w + '%'; });
+    });
+    $('fitAgain').addEventListener('click', function () {
+        qi = 0; picks = []; score = { hd: 0, rt: 0, oc: 0, ont: 0, hk: 0 }; window.__fit = null; paintQ();
+    });
+    $('fitApply').addEventListener('click', function () { openApp(); });
+}
+paintQ();
+
+/* ============================================================
+   APPLICATION
+   ============================================================ */
+var k1 = $('k1'), k2 = $('k2'), k3 = $('k3'), warn = $('warn'), sendBtn = $('send');
+var veil = $('veil'), app = {}, back = null;
+
+function step(el) { [k1, k2, k3].forEach(function (s) { s.classList.toggle('on', s === el); }); }
+function openApp() {
+    back = document.activeElement;
+    veil.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    step(k1); warn.hidden = true;
+    sendBtn.disabled = false; sendBtn.textContent = 'Send my details';
+    if (window.__fit && !$('mot').value.trim()) {
+        $('mot').value = 'The station fit quiz put me strongest at ' + window.__fit + '. ';
+    }
+    $('name').focus();
+}
+function closeApp() {
+    veil.classList.remove('open');
+    document.body.style.overflow = '';
+    if (back) back.focus();
+}
+$('openBtn').addEventListener('click', openApp);
+$('shut').addEventListener('click', closeApp);
+$('cancel').addEventListener('click', closeApp);
+$('doneBtn').addEventListener('click', closeApp);
+veil.addEventListener('click', function (e) { if (e.target === veil) closeApp(); });
+addEventListener('keydown', function (e) { if (e.key === 'Escape' && veil.classList.contains('open')) closeApp(); });
+
+function makeRef() {
+    return ('KWB' + Date.now().toString(36).slice(-3) + Math.random().toString(36).slice(2, 5)).toUpperCase();
+}
+
+/* The email carries the full application, so nothing the applicant
+   typed is lost. The attachments are simply what the form cannot send. */
+function docSubject() {
+    return 'Application ' + app.ref + ': All-Rounder, KW Shift B, ' + app.name;
+}
+function docBody() {
+    return 'Dear Miroslaw,\n\n' +
+        'I would like to apply for the Warehouse All-Rounder position on KW Shift B. ' +
+        'My CV and motivation letter are attached to this email.\n\n' +
+        'Application reference: ' + app.ref + '\n' +
+        (app.fit ? 'Station fit result: ' + app.fit + '\n' : '') +
+        'Please reply to me at: ' + app.email + '\n\n' +
+        'CONTACT DETAILS\n' +
+        'Name:  ' + app.name + '\n' +
+        'Email: ' + app.email + '\n' +
+        'Phone: ' + app.phone + '\n\n' +
+        'WAREHOUSE EXPERIENCE\n' + app.exp + '\n\n' +
+        'WHY KW SHIFT B\n' + app.mot + '\n\n' +
+        'Kind regards,\n' + app.name;
+}
+
+/* ============================================================
+   Where the message opens.
+   Phones have the app installed, so try the app's own URL scheme
+   first and fall back to the website only if nothing takes over.
+   Desktops get the web compose window in a new tab.
+   ============================================================ */
+var PHONE = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+function tryApp(scheme, web) {
+    var left = false;
+    var onHide = function () { left = true; };
+    document.addEventListener('visibilitychange', onHide, { once: true });
+    window.addEventListener('pagehide', onHide, { once: true });
+
+    var timer = setTimeout(function () {
+        document.removeEventListener('visibilitychange', onHide);
+        if (!left && document.visibilityState === 'visible') window.location.href = web;
+    }, 1400);
+
+    window.location.href = scheme;
+    setTimeout(function () { if (left) clearTimeout(timer); }, 1200);
+}
+
+function compose(provider, subject, body) {
+    var s = encodeURIComponent(subject), b = encodeURIComponent(body), t = encodeURIComponent(TO);
+    var mailto = 'mailto:' + TO + '?subject=' + s + '&body=' + b;
+
+    if (provider === 'app') { window.location.href = mailto; return; }
+
+    var web = {
+        gmail:   'https://mail.google.com/mail/?view=cm&fs=1&to=' + t + '&su=' + s + '&body=' + b,
+        outlook: 'https://outlook.live.com/mail/0/deeplink/compose?to=' + t + '&subject=' + s + '&body=' + b,
+        yahoo:   'https://compose.mail.yahoo.com/?to=' + t + '&subj=' + s + '&body=' + b
+    }[provider];
+    if (!web) { window.location.href = mailto; return; }
+
+    if (PHONE) {
+        var scheme = {
+            gmail:   'googlegmail://co?to=' + t + '&subject=' + s + '&body=' + b,
+            outlook: 'ms-outlook://compose?to=' + t + '&subject=' + s + '&body=' + b,
+            yahoo:   'ymail://mail/compose?to=' + t + '&subject=' + s + '&body=' + b
+        }[provider];
+        tryApp(scheme, web);
+    } else {
+        window.open(web, '_blank', 'noopener');
+    }
+}
+
+document.querySelectorAll('.prov').forEach(function (b) {
+    b.addEventListener('click', function () { compose(b.dataset.p, docSubject(), docBody()); });
+});
+
+/* On a phone the default mail app is the surest route, so lead with it
+   and describe every option by what it actually does there. */
+if (PHONE) {
+    var pick = document.querySelector('.pick');
+    var appBtn = pick.querySelector('[data-p="app"]');
+    pick.insertBefore(appBtn, pick.firstElementChild);
+    appBtn.querySelector('small').textContent = 'Your default mail app';
+    pick.querySelectorAll('.prov').forEach(function (b) {
+        if (b !== appBtn) b.querySelector('small').textContent = 'Opens the app';
+    });
+}
+
+$('copyBtn').addEventListener('click', function () {
+    var text = 'To: ' + TO + '\nSubject: ' + docSubject() + '\n\n' + docBody();
+    var btn = $('copyBtn');
+    navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = 'Copied. Paste it into your email';
+        setTimeout(function () { btn.textContent = 'Copy the message instead'; }, 3200);
+    }).catch(function () { btn.textContent = 'Copy failed. Select the text manually'; });
+});
+
+$('form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if ($('hp').checked) return;
+    var val = function (id) { return $(id).value.trim(); };
+    app = { name: val('name'), email: val('email'), phone: val('phone'), exp: val('exp'), mot: val('mot'), ref: makeRef(), fit: window.__fit || '' };
+    warn.hidden = true;
+
+    if (ACCESS_KEY.indexOf('PASTE_') === 0) {
+        $('refOut').textContent = app.ref;
+        step(k3);
+        return;
+    }
+
+    sendBtn.disabled = true;
+    step(k2);
+
+    fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+            access_key: ACCESS_KEY,
+            from_name: 'KW Shift B careers page',
+            subject: 'Application ' + app.ref + ': All-Rounder, KW Shift B, ' + app.name,
+            replyto: app.email,
+            Reference: app.ref,
+            'Station fit': app.fit || 'not taken',
+            Name: app.name,
+            Email: app.email,
+            Phone: app.phone,
+            'Warehouse experience': app.exp,
+            'Why KW Shift B': app.mot
+        })
+    })
+    .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+    .then(function (res) {
+        if (!res.ok || res.d.success === false) throw new Error('rejected');
+        $('refOut').textContent = app.ref;
+        sendBtn.disabled = false;
+        step(k3);
+    })
+    .catch(function () {
+        warn.innerHTML = '<b>Your details didn\'t send.</b>Check your connection and try again, or ' +
+            '<button type="button" id="fb">send everything by email instead</button>.';
+        warn.hidden = false;
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'Try again';
+        step(k1);
+        $('fb').addEventListener('click', function () { compose('app', docSubject(), docBody()); });
+    });
+});
+})();
 </script>
 </body>
 </html>
