@@ -35,8 +35,11 @@
     --slow: cubic-bezier(.16,1,.3,1);
 }
 
-body { font-family: var(--body); background: var(--void); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+html, body { max-width: 100%; overflow-x: hidden; overscroll-behavior-x: none; }
+body { font-family: var(--body); background: var(--void); color: var(--text); -webkit-font-smoothing: antialiased; }
 html.smooth #sw { position: fixed; top: 0; left: 0; width: 100%; will-change: transform; }
+#sw { perspective: 1500px; }
+#sc { transform-style: preserve-3d; will-change: transform; }
 img, video, canvas { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 :focus-visible { outline: 2px solid var(--lamp); outline-offset: 4px; border-radius: 3px; }
@@ -47,7 +50,7 @@ a { color: inherit; text-decoration: none; }
 .h3 { font-family: var(--display); font-weight: 700; font-size: clamp(1.25rem,2.1vw,1.7rem); line-height: 1.06; letter-spacing: -.02em; }
 .lead { font-size: clamp(1.02rem,1.35vw,1.2rem); font-weight: 300; line-height: 1.66; color: var(--dim); }
 .wrap { max-width: 1280px; margin: 0 auto; }
-.sec { padding: clamp(80px,12vw,180px) var(--pad); position: relative; }
+.sec { padding: clamp(80px,12vw,180px) var(--pad); position: relative; overflow: hidden; }
 .sec > .wrap, .apply-in, .hero-in { position: relative; z-index: 2; }
 .eyebrow { color: var(--ember); display: block; margin-bottom: 20px; }
 
@@ -64,13 +67,13 @@ a { color: inherit; text-decoration: none; }
 .boot-skip { position: absolute; bottom: 34px; font-family: var(--mono); font-size: .6rem; letter-spacing: .2em; color: var(--faint); }
 
 .grain {
-    position: fixed; inset: -50%; z-index: 9000; pointer-events: none; opacity: .34; mix-blend-mode: overlay;
+    position: fixed; inset: 0; z-index: 9000; pointer-events: none; opacity: .34; mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.42'/%3E%3C/svg%3E");
     animation: grain 6s steps(6) infinite;
 }
 @keyframes grain {
-    0%,100% { transform: translate(0,0) } 20% { transform: translate(-4%,3%) }
-    40% { transform: translate(3%,-4%) } 60% { transform: translate(-3%,-3%) } 80% { transform: translate(4%,2%) }
+    0%,100% { background-position: 0 0 } 20% { background-position: -30px 20px }
+    40% { background-position: 25px -30px } 60% { background-position: -20px -20px } 80% { background-position: 30px 15px }
 }
 
 .ring {
@@ -531,7 +534,7 @@ a { color: inherit; text-decoration: none; }
     .menu a { display: block; padding: 16px 0; font-size: .76rem; }
     .menu .cta { text-align: center; margin-top: 12px; padding: 16px; }
     .facts { gap: 26px; flex-wrap: wrap; }
-    .ghost { font-size: 22vw; }
+    .ghost { font-size: 17vw; }
     .pick, .row { grid-template-columns: 1fr; flex-direction: column; }
     .frame { border-radius: 14px; }
     .barrow { grid-template-columns: 96px 1fr 38px; gap: 10px; }
@@ -739,7 +742,7 @@ a { color: inherit; text-decoration: none; }
 
         <div class="shift hud rv dl1">
             <div class="shift-grid">
-                <svg class="orbit" id="orbit" viewBox="0 0 420 420" role="img" aria-label="The five stations running at once">
+                <svg class="orbit" id="orbit" viewBox="-24 -24 468 468" role="img" aria-label="The five stations running at once">
                     <g id="spokes"></g>
                     <circle class="core" cx="210" cy="210" r="52"/>
                     <text class="corelab" x="210" y="207">YOU</text>
@@ -1382,10 +1385,11 @@ if (fine) {
     document.querySelectorAll('.glowcard').forEach(function (c) {
         c.addEventListener('pointermove', function (e) {
             var r = c.getBoundingClientRect();
-            var px = (e.clientX - r.left) / r.width - .5, py = (e.clientY - r.top) / r.height - .5;
-            c.style.transform = 'translateY(-5px) rotateX(' + (-py * 5).toFixed(2) + 'deg) rotateY(' + (px * 7).toFixed(2) + 'deg)';
+            c._ry = ((e.clientX - r.left) / r.width - .5) * 7;
+            c._rx = -((e.clientY - r.top) / r.height - .5) * 5;
+            c._lift = -5;
         });
-        c.addEventListener('pointerleave', function () { c.style.transform = ''; });
+        c.addEventListener('pointerleave', function () { c._rx = c._ry = c._lift = 0; });
     });
 
     /* a short trail of dots behind the ring */
@@ -1407,6 +1411,43 @@ if (fine) {
 }
 
 /* ============================================================
+   DEVICE TILT. On a phone, tilting moves the layers in depth.
+   iOS needs a tap before it will hand over the sensor, so this
+   lives behind a button rather than starting on its own.
+   ============================================================ */
+var tiltX = 0, tiltY = 0, tiltAimX = 0, tiltAimY = 0, tiltOn = false;
+
+function clamp1(v) { return Math.max(-1, Math.min(1, v)); }
+function onOrient(e) {
+    if (e.gamma === null && e.beta === null) return;
+    var g = e.gamma || 0, b = e.beta || 0;
+    var rot = (screen.orientation && screen.orientation.angle) || window.orientation || 0;
+    if (Math.abs(rot) === 90) { var t = g; g = b * (rot > 0 ? -1 : 1); b = t * (rot > 0 ? 1 : -1); }
+    tiltAimX = clamp1(g / 24);
+    tiltAimY = clamp1((b - 42) / 24);
+    tiltOn = true;
+}
+
+/* No switch to find. Android hands the sensor over straight away.
+   iOS will only release it inside a real gesture, so the very first
+   touch anywhere on the page asks for it, once, and quietly. */
+if (!fine && 'DeviceOrientationEvent' in window && !reduce) {
+    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+        var askOnce = function () {
+            removeEventListener('touchend', askOnce);
+            removeEventListener('click', askOnce);
+            DeviceOrientationEvent.requestPermission()
+                .then(function (r) { if (r === 'granted') addEventListener('deviceorientation', onOrient); })
+                .catch(function () {});
+        };
+        addEventListener('touchend', askOnce, { passive: true });
+        addEventListener('click', askOnce);
+    } else {
+        addEventListener('deviceorientation', onOrient);
+    }
+}
+
+/* ============================================================
    MENU + SMOOTH SCROLL
    ============================================================ */
 var burger = $('burger'), menu = $('menu');
@@ -1421,7 +1462,6 @@ var smooth = wide && fine && !reduce;
 var cur = 0, aim = 0;
 if (smooth) {
     document.documentElement.classList.add('smooth');
-    sc.style.transform = 'none';
     var setH = function () { document.body.style.height = sc.getBoundingClientRect().height + 'px'; };
     setH();
     if (window.ResizeObserver) new ResizeObserver(setH).observe(sc);
@@ -1501,6 +1541,18 @@ addDepth('.kit', .06);
 addDepth('.crew .person', .02, .03);
 addDepth('.need', -.04);
 addDepth('.facts', .07);
+addDepth('.h2', .04);
+addDepth('.board', .028);
+addDepth('.views', .05);
+addDepth('.quiz', .026);
+addDepth('.shift', .03);
+addDepth('.deck', .03);
+addDepth('.strip-row b', .02, .012);
+addDepth('.callout', .05);
+addDepth('.stagewrap', .022);
+addDepth('.foot-top', .05);
+addDepth('.tagpill', .085);
+addDepth('.hint', .09);
 var drifters = [].slice.call(document.querySelectorAll('[data-drift]'));
 var railLinks = [].slice.call(document.querySelectorAll('.rail a'));
 var railSecs = railLinks.map(function (a) { return $(a.dataset.s); });
@@ -1529,24 +1581,51 @@ function loop(now) {
 
         /* the hero lifts away instead of just scrolling off */
         var hp = Math.min(cur / innerHeight, 1);
-        heroIn.style.transform = 'translate3d(0,' + (hp * -70).toFixed(1) + 'px,0)';
+        heroIn.style.transform = 'translate3d(' + (tiltX * 26).toFixed(1) + 'px,' +
+                                 (hp * -70 + tiltY * 18).toFixed(1) + 'px,0)';
+        if (tiltOn) lampGlow.style.opacity = 1;
+
+        /* the whole page turns as one slab. The pivot follows the
+           middle of the screen, so the far ends never swing wide. */
+        if (tiltOn) {
+            sc.style.transformOrigin = '50% ' + (cur + innerHeight / 2).toFixed(0) + 'px';
+            sc.style.transform = 'rotateY(' + (tiltX * 4.2).toFixed(2) + 'deg) rotateX(' +
+                                 (-tiltY * 3.4).toFixed(2) + 'deg)';
+        }
         heroIn.style.opacity = (1 - hp * .95).toFixed(3);
 
         var fr = frame.getBoundingClientRect();
         var grow = 1 - Math.min(Math.max((fr.top - innerHeight * .1) / (innerHeight * .82), 0), 1);
-        frame.style.transform = 'scale(' + (.88 + .12 * grow).toFixed(4) + ')';
+        frame.style.transform = 'translate3d(' + (tiltX * 16).toFixed(1) + 'px,' + (tiltY * 10).toFixed(1) +
+                                'px,0) scale(' + (.88 + .12 * grow).toFixed(4) + ')' +
+                                (tiltOn ? ' rotateY(' + (tiltX * 3).toFixed(2) + 'deg)' : '');
         frame.style.borderRadius = (20 - 8 * grow).toFixed(1) + 'px';
 
+        if (tiltOn) {
+            hx = innerWidth / 2 + tiltX * innerWidth * .42;
+            hy = innerHeight / 2 + tiltY * innerHeight * .3;
+            overHero = true;
+        }
         if (overHero) {
             lampX += (hx - lampX) * .1; lampY += (hy - lampY) * .1;
             lampGlow.style.transform = 'translate3d(' + lampX.toFixed(1) + 'px,' + lampY.toFixed(1) + 'px,0)';
         }
 
+        /* one lerp for the sensor, so tilting glides instead of jittering */
+        tiltX += (tiltAimX - tiltX) * .07;
+        tiltY += (tiltAimY - tiltY) * .07;
+
         for (var i = 0; i < depths.length; i++) {
-            var o = depths[i], b = o.el.getBoundingClientRect();
+            var o = depths[i], el = o.el, b = el.getBoundingClientRect();
             if (b.bottom < -250 || b.top > innerHeight + 250) continue;
             var mid = b.top + b.height / 2 - innerHeight / 2;
-            o.el.style.transform = 'translate3d(0,' + (-mid * o.d).toFixed(1) + 'px,0)';
+            var dx = tiltX * o.d * 300;
+            var dy = -mid * o.d + tiltY * o.d * 220 + (el._lift || 0);
+            var t = 'translate3d(' + dx.toFixed(1) + 'px,' + dy.toFixed(1) + 'px,0)';
+            if (el._rx || el._ry) t += ' rotateX(' + el._rx.toFixed(2) + 'deg) rotateY(' + el._ry.toFixed(2) + 'deg)';
+            else if (tiltOn && el.classList.contains('glowcard'))
+                t += ' rotateX(' + (-tiltY * 5).toFixed(2) + 'deg) rotateY(' + (tiltX * 7).toFixed(2) + 'deg)';
+            el.style.transform = t;
         }
 
         /* the big words come toward you and settle, then recede.
@@ -1556,7 +1635,8 @@ function loop(now) {
             if (gb.bottom < -300 || gb.top > innerHeight + 300) continue;
             var q = 1 - (gb.top + gb.height / 2) / innerHeight;
             var near = 1 - Math.min(Math.abs(q - .5) * 2.1, 1);
-            g.style.transform = 'translate(-50%,-50%) scale(' + (1.2 - .2 * near).toFixed(4) + ')';
+            g.style.transform = 'translate(-50%,-50%) translate(' + (tiltX * -46).toFixed(1) + 'px,' +
+                                (tiltY * -30).toFixed(1) + 'px) scale(' + (1.2 - .2 * near).toFixed(4) + ')';
             g.style.opacity = (near * near).toFixed(3);
             g.style.filter = 'blur(' + ((1 - near) * 5).toFixed(2) + 'px)';
         }
